@@ -41,19 +41,19 @@ export default defineComponent({
   props: {
     msg: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   setup: () => {
     const count = ref(0);
     return { count };
-  },
+  }
 });
 </script>
 
 <style scoped>
 a {
-  color: #42b983;
+  color: rgb(185, 147, 66);
 }
 
 label {

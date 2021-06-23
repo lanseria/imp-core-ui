@@ -1,0 +1,101 @@
+{
+  "editor.autoIndent": "advanced",
+  "editor.fontSize": 16,
+  "editor.insertSpaces": true,
+  "editor.mouseWheelZoom": false,
+  "editor.snippetSuggestions": "top",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.minimap.scale": 2,
+  "editor.fontFamily": "Fira Code, Consolas, Microsoft YaHei",
+  "editor.fontLigatures": true,
+  "eslint.format.enable": false,
+  "eslint.alwaysShowStatus": false,
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue",
+    "javascriptreact",
+    "typescriptreact"
+  ],
+  "extensions.ignoreRecommendations": false,
+  "files.autoSaveDelay": 1000,
+  "files.eol": "\n",
+  "html.format.enable": false,
+  "git.autofetch": true,
+  "javascript.format.enable": false,
+  "javascript.validate.enable": true,
+  "todohighlight.exclude": [
+    "**/*.map",
+    "**/*.min.*",
+    "**/.github/**",
+    "**/.vscode/**",
+    "**/_output/**",
+    "**/bower_components/**",
+    "**/build/**",
+    "**/disp_static/**",
+    "**/dist/**",
+    "**/node_modules/**"
+  ],
+  "todohighlight.include": [
+    "**/*.css",
+    "**/*.html",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.php",
+    "**/*.scss",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.vue"
+  ],
+  "typescript.format.enable": false,
+  "typescript.validate.enable": true,
+  "vetur.format.enable": false,
+  "vetur.validation.script": true,
+  "vetur.validation.template": true,
+  "vetur.validation.templateProps": true,
+  "vetur.validation.interpolation": true,
+  "vetur.completion.scaffoldSnippetSources": {
+    "workspace": "工作区设置",
+    "user": "",
+    "vetur": "默认插件设置"
+  },
+  "workbench.editor.tabSizing": "shrink",
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vue-scss-variable-scan.globalPath": "src/styles/var.scss"
+}

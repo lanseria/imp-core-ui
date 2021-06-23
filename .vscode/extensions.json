@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "mikestead.dotenv",
+    "editorconfig.editorconfig",
+    "wayou.vscode-todo-highlight",
+    "sibiraj-s.vscode-scss-formatter",
+    "eamodio.gitlens",
+    "eg2.vscode-npm-script",
+    "christian-kohler.npm-intellisense",
+    "peakchen90.open-html-in-browser",
+    "xabikos.javascriptsnippets",
+    "rain.vue-scss-variable-scan",
+    "johnsoncodehk.volar"
+  ]
+}
