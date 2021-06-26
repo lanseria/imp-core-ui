@@ -11,10 +11,25 @@
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "types": ["vite/client", "vite-plugin-pwa/client"],
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "typeRoots": ["./node_modules/@types/", "./types"],
     "paths": {
-      "/@/*": ["src/*"]
+      "/@/*": ["src/*"],
+      "/#/*": ["types/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+
+    "vite.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }

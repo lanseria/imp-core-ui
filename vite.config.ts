@@ -26,7 +26,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     resolve: {
       alias: createAlias([
         // /@/xxxx => src/xxxx
-        ["/@/", "src"]
+        ["/@/", "src"],
+        ["/#/", "types"]
       ]),
       extensions: [".vue", ".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"]
     },
