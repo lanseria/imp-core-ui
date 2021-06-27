@@ -34,5 +34,19 @@ export const LoginRoute: AppRouteRecordRaw = {
   }
 };
 
+export const DashboardRoute: AppRouteRecordRaw = {
+  path: "/dashboard",
+  name: "Dashboard",
+  component: () => import("/@/views/pages/login/Login.vue"),
+  meta: {
+    title: "主页"
+  }
+};
+
 // Basic routing without permission
-export const basicRoutes = [LoginRoute, RootRoute, REDIRECT_ROUTE];
+export const basicRoutes = [
+  LoginRoute,
+  DashboardRoute,
+  RootRoute,
+  REDIRECT_ROUTE
+];
