@@ -1,6 +1,6 @@
 interface LoginVO {
   username: string;
   password: string;
-  randomStr: number;
-  code: number;
+  randomStr: string;
+  code: string;
 }

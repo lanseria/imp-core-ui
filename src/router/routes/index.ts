@@ -21,7 +21,8 @@ export const RootRoute: AppRouteRecordRaw = {
   name: "Root",
   redirect: PageEnum.BASE_HOME,
   meta: {
-    title: "Root"
+    title: "Root",
+    isAuth: false
   }
 };
 
@@ -30,7 +31,8 @@ export const LoginRoute: AppRouteRecordRaw = {
   name: "Login",
   component: () => import("/@/views/pages/login/Login.vue"),
   meta: {
-    title: "登录"
+    title: "登录",
+    isAuth: false
   }
 };
 
@@ -40,7 +42,8 @@ export const DashboardRoute: AppRouteRecordRaw = {
   component: () => import("/@/views/layouts/dashboard/index.vue"),
   redirect: "/dashboard/index",
   meta: {
-    title: "主页"
+    title: "主页",
+    isAuth: true
   },
   children: [
     {
@@ -48,7 +51,8 @@ export const DashboardRoute: AppRouteRecordRaw = {
       name: "Dashboard",
       component: () => import("/@/views/pages/dashboard/index.vue"),
       meta: {
-        title: "主页"
+        title: "主页",
+        isAuth: true
       }
     }
   ]

@@ -42,7 +42,8 @@ export const useUserStore = defineStore({
         });
         const body = await loginReq(form);
         this.setUserToken(body);
-        this.userInfo();
+        this.gSetUserInfo();
+        router.push("/");
       } catch (error) {
         console.error(error);
       }
@@ -65,7 +66,7 @@ export const useUserStore = defineStore({
         // await dispatch(ActionTypes.CLEAR_ALL_USER_INFORMATION);
       }
     },
-    async userInfo() {
+    async gSetUserInfo() {
       try {
         const body = await userInfoReq();
         this.setUserInfo(body.data);

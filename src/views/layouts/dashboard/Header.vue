@@ -7,39 +7,74 @@
     <div></div>
     <div class="nav-end">
       <n-button text class="nav-picker" @click="handleThemeUpdate">
-        {{ appStore.getThemeText }}
+        {{ themeText }}
       </n-button>
+      <n-dropdown @select="handleSelect" trigger="click" :options="options">
+        <n-button text :keyboard="false">{{ userInfo?.realName }}</n-button>
+      </n-dropdown>
     </div>
   </n-layout-header>
 </template>
 
 <script lang="ts">
-import { NLayoutHeader, NText, NButton } from "naive-ui";
+import { computed } from "@vue/runtime-core";
+import { NLayoutHeader, NText, NButton, NDropdown } from "naive-ui";
 import { router } from "/@/router";
 import { useAppStore } from "/@/store/modules/app";
+import { useUserStore } from "/@/store/modules/user";
 
 export default {
   name: "DashboardHeader",
   components: {
     NLayoutHeader,
     NText,
-    NButton
+    NButton,
+    NDropdown
   },
   setup() {
     // use
     const appStore = useAppStore();
+    const userStore = useUserStore();
+    // computed
+    const themeText = computed(() => {
+      return appStore.getThemeText;
+    });
+    const userInfo = computed(() => {
+      return userStore.getUserInfo;
+    });
+    // method
     const handleLogoClick = () => {
       router.push("/");
     };
     const handleThemeUpdate = () => {
       appStore.triggerTheme();
     };
+    const handleSelect = () => {
+      //
+    };
     return {
+      // const
+      options: [
+        {
+          label: "赋能台",
+          key: "dashboard"
+        },
+        {
+          label: "个人信息",
+          key: "center"
+        },
+        {
+          label: "登出",
+          key: "logout"
+        }
+      ],
       // computed
-      appStore,
+      themeText,
+      userInfo,
       // method
       handleLogoClick,
-      handleThemeUpdate
+      handleThemeUpdate,
+      handleSelect
     };
   }
 };

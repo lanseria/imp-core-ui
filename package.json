@@ -25,6 +25,7 @@
     "upi": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@vicons/ionicons5": "^0.10.0",
     "@vueuse/core": "^4.1.0",
     "axios": "^0.21.1",
     "change-case": "^4.1.2",
