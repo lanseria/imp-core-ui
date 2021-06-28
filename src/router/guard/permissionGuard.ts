@@ -7,7 +7,6 @@ import { useUserStore } from "/@/store/modules/user";
 
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    debugger;
     const meta = to.meta || {};
     const token = getToken();
     if (token) {

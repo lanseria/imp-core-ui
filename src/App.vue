@@ -1,12 +1,27 @@
 <template>
-  <RouterView />
+  <n-config-provider :theme="theme">
+    <router-view />
+  </n-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { computed, defineComponent } from "vue";
+import { NConfigProvider, darkTheme } from "naive-ui";
+import { useAppStore } from "./store/modules/app";
 export default defineComponent({
-  name: "App"
+  components: {
+    NConfigProvider
+  },
+  name: "App",
+  setup() {
+    const appStore = useAppStore();
+    const theme = computed(() => {
+      return appStore.getTheme === "dark" ? darkTheme : null;
+    });
+    return {
+      theme
+    };
+  }
 });
 </script>
 

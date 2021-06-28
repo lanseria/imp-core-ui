@@ -4,6 +4,9 @@ import { setupRouterGuard } from "/@/router/guard";
 import { router, setupRouter } from "/@/router";
 import { setupStore } from "/@/store";
 
+import "/@/styles/index.css";
+import { initAppConfigStore } from "./logic/initAppConfig";
+
 async function bootstrap() {
   const app = createApp(App);
 
@@ -11,7 +14,7 @@ async function bootstrap() {
   setupStore(app);
 
   // Initialize internal system configuration
-  // initAppConfigStore();
+  initAppConfigStore();
 
   // Register global components
   // registerGlobComp(app);

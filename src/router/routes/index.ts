@@ -37,10 +37,21 @@ export const LoginRoute: AppRouteRecordRaw = {
 export const DashboardRoute: AppRouteRecordRaw = {
   path: "/dashboard",
   name: "Dashboard",
-  component: () => import("/@/views/pages/login/Login.vue"),
+  component: () => import("/@/views/layouts/dashboard/index.vue"),
+  redirect: "/dashboard/index",
   meta: {
     title: "主页"
-  }
+  },
+  children: [
+    {
+      path: "index",
+      name: "Dashboard",
+      component: () => import("/@/views/pages/dashboard/index.vue"),
+      meta: {
+        title: "主页"
+      }
+    }
+  ]
 };
 
 // Basic routing without permission
