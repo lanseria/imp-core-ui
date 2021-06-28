@@ -49,8 +49,20 @@ export default {
     const handleThemeUpdate = () => {
       appStore.triggerTheme();
     };
-    const handleSelect = () => {
-      //
+    const handleLogout = () => {
+      userStore.logout();
+    };
+    const handleSelect = (key: string) => {
+      switch (key) {
+        case "logout":
+          handleLogout();
+          break;
+        case "dashboard":
+          router.push("/");
+          break;
+        default:
+          break;
+      }
     };
     return {
       // const

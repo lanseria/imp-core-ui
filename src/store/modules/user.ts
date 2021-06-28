@@ -63,7 +63,7 @@ export const useUserStore = defineStore({
           name: LoginRoute.name
         });
         // 不管有没有请求成功都是清空用户数据
-        // await dispatch(ActionTypes.CLEAR_ALL_USER_INFORMATION);
+        this.removeAll();
       }
     },
     async gSetUserInfo() {

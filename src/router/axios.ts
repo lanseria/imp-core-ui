@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { getUserToken } from "../utils/auth";
+import { getUserToken } from "/@/utils/auth";
 import { requestTimeout, requestBaseURL } from "./config";
 
 const request = axios.create({
@@ -16,8 +16,7 @@ request.interceptors.request.use(
   config => {
     // 请求之前处理config
     const userToken = getUserToken();
-    const isToken = (config.headers || {}).isToken === false;
-    if (userToken.access_token && !isToken) {
+    if (userToken?.access_token) {
       config.headers["Authorization"] = "Bearer " + userToken.access_token; // token
     }
     if (config.method === "get") {

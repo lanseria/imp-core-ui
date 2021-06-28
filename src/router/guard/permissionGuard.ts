@@ -28,7 +28,6 @@ export function createPermissionGuard(router: Router) {
             await userStore.logout();
           }
         }
-        debugger;
         if (redirect) {
           // 跳转到目的路由
           console.log("跳转到目的路由", redirect);
