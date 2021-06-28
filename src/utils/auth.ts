@@ -1,15 +1,15 @@
 import storage from "store";
 
-export const setToken = (v: string) => {
-  storage.set("USER_TOKEN", v);
+export const setUserToken = (v: Nullable<UserTokenVO>) => {
+  v ? storage.set("USER_TOKEN", v) : storage.remove("USER_TOKEN");
 };
 
-export const getToken = (): string => {
+export const getUserToken = (): UserTokenVO => {
   return storage.get("USER_TOKEN");
 };
 
-export const setUserInfo = (v: UserInfoLoginVO) => {
-  storage.set("USER_INFO", v);
+export const setUserInfo = (v: Nullable<UserInfoLoginVO>) => {
+  v ? storage.set("USER_INFO", v) : storage.remove("USER_INFO");
 };
 
 export const getUserInfo = (): UserInfoLoginVO => {

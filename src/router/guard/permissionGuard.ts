@@ -1,15 +1,15 @@
 import type { Router } from "vue-router";
 // import { useStore } from "/@/store";
 import { LoginRoute } from "../routes";
-import { getToken } from "/@/utils/auth";
+import { getUserToken } from "/@/utils/auth";
 import { isNil } from "lodash";
 import { useUserStore } from "/@/store/modules/user";
 
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     const meta = to.meta || {};
-    const token = getToken();
-    if (token) {
+    const userToken = getUserToken();
+    if (userToken?.access_token) {
       if (to.name === LoginRoute.name) {
         next("/");
       } else {
@@ -28,6 +28,7 @@ export function createPermissionGuard(router: Router) {
             await userStore.logout();
           }
         }
+        debugger;
         if (redirect) {
           // 跳转到目的路由
           console.log("跳转到目的路由", redirect);

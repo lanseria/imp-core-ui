@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { getToken } from "../utils/auth";
+import { getUserToken } from "../utils/auth";
 import { requestTimeout, requestBaseURL } from "./config";
 
 const request = axios.create({
@@ -15,11 +15,10 @@ const request = axios.create({
 request.interceptors.request.use(
   config => {
     // 请求之前处理config
-    const token = getToken();
+    const userToken = getUserToken();
     const isToken = (config.headers || {}).isToken === false;
-    // console.log(isToken, store.state.user.userToken?.access_token);
-    if (token && !isToken) {
-      config.headers["Authorization"] = "Bearer " + token; // token
+    if (userToken.access_token && !isToken) {
+      config.headers["Authorization"] = "Bearer " + userToken.access_token; // token
     }
     if (config.method === "get") {
       config.paramsSerializer = function (params) {

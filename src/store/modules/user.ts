@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { encryption } from "/@/utils/encrypt";
 import { loginReq, logoutReq } from "/@/api/Auth";
-import { setToken, setUserInfo } from "/@/utils/auth";
+import { setUserToken, setUserInfo } from "/@/utils/auth";
 import { userInfoReq } from "/@/api/Admin/User";
 import { LoginRoute } from "/@/router/routes";
 import { router } from "/@/router";
@@ -26,11 +26,11 @@ export const useUserStore = defineStore({
     }
   },
   actions: {
-    setUserToken(userToken: UserTokenVO) {
+    setUserToken(userToken: Nullable<UserTokenVO>) {
       this.userToken = userToken;
-      setToken(this.userToken.access_token);
+      setUserToken(this.userToken);
     },
-    setUserInfo(userInfoLogin: UserInfoLoginVO) {
+    setUserInfo(userInfoLogin: Nullable<UserInfoLoginVO>) {
       this.userInfoLogin = userInfoLogin;
       setUserInfo(this.userInfoLogin);
     },
@@ -73,6 +73,10 @@ export const useUserStore = defineStore({
       } catch (error) {
         throw new Error(error);
       }
+    },
+    removeAll() {
+      this.setUserToken(null);
+      this.setUserInfo(null);
     }
   }
 });
