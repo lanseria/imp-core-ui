@@ -88,8 +88,7 @@ import {
   NInput,
   NButton,
   NIcon,
-  NH1,
-  useMessage
+  NH1
 } from "naive-ui";
 import {
   PersonOutline as PersonOutlineIcon,
@@ -120,7 +119,6 @@ export default {
   },
   setup() {
     // use
-    const message = useMessage();
     const isTabletRef = useIsTablet();
     const userStore = useUserStore();
     // refs
@@ -137,13 +135,11 @@ export default {
       modelRef.value.randomStr = randomStr;
     };
     const handleSubmit = () => {
-      FormRef.value.validate((errors: any) => {
+      FormRef.value.validate((errors: IObj) => {
         if (!errors) {
-          message.success("Valid");
           userStore.login(modelRef.value);
         } else {
           console.log(errors);
-          message.error("Invalid");
         }
       });
     };

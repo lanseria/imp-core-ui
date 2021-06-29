@@ -2,7 +2,7 @@
   <n-config-provider :theme="theme">
     <n-notification-provider>
       <n-message-provider>
-        <router-view />
+        <Slot />
       </n-message-provider>
     </n-notification-provider>
   </n-config-provider>
@@ -17,11 +17,13 @@ import {
   darkTheme
 } from "naive-ui";
 import { useAppStore } from "./store/modules/app";
+import Slot from "/@/views/layouts/Slot.vue";
 export default defineComponent({
   components: {
     NConfigProvider,
     NMessageProvider,
-    NNotificationProvider
+    NNotificationProvider,
+    Slot
   },
   name: "App",
   setup() {

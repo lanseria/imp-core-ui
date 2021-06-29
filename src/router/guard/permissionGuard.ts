@@ -31,7 +31,9 @@ export function createPermissionGuard(router: Router) {
         if (redirect) {
           // 跳转到目的路由
           console.log("跳转到目的路由", redirect);
-          next(redirect);
+          next({
+            path: redirect
+          });
         } else {
           next();
         }

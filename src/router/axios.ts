@@ -2,7 +2,6 @@ import axios from "axios";
 import qs from "qs";
 import { getUserToken } from "/@/utils/auth";
 import { requestTimeout, requestBaseURL } from "./config";
-import { useNotification } from "naive-ui";
 import { useUserStore } from "../store/modules/user";
 
 const request = axios.create({
@@ -35,11 +34,12 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   res => {
-    const notification = useNotification();
     const userStore = useUserStore();
     const showNotification = (msg: string) => {
-      notification.warning({
-        content: msg
+      window.$notification.warning({
+        content: "提醒",
+        meta: msg,
+        duration: 2000
       });
     };
     const clearInfoToLogin = () => {
