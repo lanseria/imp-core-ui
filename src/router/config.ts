@@ -1,4 +1,4 @@
-import { Dictionary } from "lodash";
+import type { Dictionary } from "lodash";
 
 export const requestTimeout = 30000;
 export const requestBaseURL = "/api";

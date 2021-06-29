@@ -2,8 +2,8 @@ import type { Router } from "vue-router";
 // import { useStore } from "/@/store";
 import { LoginRoute } from "../routes";
 import { getUserToken } from "/@/utils/auth";
-import { isNil } from "lodash";
 import { useUserStore } from "/@/store/modules/user";
+import { isNil } from "lodash-es";
 
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
@@ -13,8 +13,8 @@ export function createPermissionGuard(router: Router) {
       if (to.name === LoginRoute.name) {
         next("/");
       } else {
-        const redirect = from.query.redirect
-          ? decodeURIComponent(from.query.redirect as string)
+        const redirect = to.query.redirect
+          ? decodeURIComponent(to.query.redirect as string)
           : null;
         // 0 进入获取用户基本信息 1 以上就跳过进入正常页面
         const userStore = useUserStore();

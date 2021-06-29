@@ -1,4 +1,6 @@
-import CryptoJS from "crypto-js";
+import cryptoLatin1 from "crypto-js/enc-latin1";
+import cryptoAES from "crypto-js/aes";
+import cryptoZeroPadding from "crypto-js/pad-zeropadding";
 interface Params<T> {
   data: T;
   param: string[];
@@ -12,12 +14,11 @@ export const encryption = <T>(params: Params<T>) => {
   const result = JSON.parse(JSON.stringify(data));
   param.forEach(ele => {
     const data = result[ele];
-    const iv = CryptoJS.enc.Latin1.parse(key);
+    const iv = cryptoLatin1.parse(key);
     // 加密
-    const encrypted = CryptoJS.AES.encrypt(data, iv, {
+    const encrypted = cryptoAES.encrypt(data, iv, {
       iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.ZeroPadding
+      padding: cryptoZeroPadding
     });
     result[ele] = encrypted.toString();
   });
