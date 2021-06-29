@@ -63,7 +63,12 @@
             </n-input>
           </n-form-item>
           <n-form-item>
-            <n-button type="primary" @click="handleSubmit()">登录</n-button>
+            <n-button
+              type="primary"
+              :loading="iepSubmitLoading"
+              @click="handleSubmit()"
+              >登录</n-button
+            >
           </n-form-item>
         </n-form>
       </div>
@@ -99,6 +104,7 @@ import { ref } from "vue";
 import { useIsTablet } from "/@/utils/composables";
 import { rules } from "./options";
 import { useUserStore } from "/@/store/modules/user";
+import { useIepSubmit } from "/@/hooks/useForm";
 export default {
   components: {
     LandingFooter,
@@ -121,6 +127,7 @@ export default {
     // use
     const isTabletRef = useIsTablet();
     const userStore = useUserStore();
+    const { iepSubmitLoading, iepSubmit } = useIepSubmit();
     // refs
     const FormRef = ref();
     const CodeImgRef = ref<CodeImgRefs>();
@@ -134,14 +141,18 @@ export default {
     const updateRandomStr = (randomStr: string) => {
       modelRef.value.randomStr = randomStr;
     };
+    const submitAction = async () => {
+      try {
+        await userStore.login(modelRef.value);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        // refresh code
+        CodeImgRef.value?.refreshCode();
+      }
+    };
     const handleSubmit = () => {
-      FormRef.value.validate((errors: IObj) => {
-        if (!errors) {
-          userStore.login(modelRef.value);
-        } else {
-          console.log(errors);
-        }
-      });
+      iepSubmit(FormRef.value, submitAction);
     };
     return {
       // const
@@ -150,6 +161,7 @@ export default {
       FormRef,
       CodeImgRef,
       // ref
+      iepSubmitLoading,
       modelRef,
       isTablet: isTabletRef,
       // method

@@ -50,7 +50,18 @@ export default {
       appStore.triggerTheme();
     };
     const handleLogout = () => {
-      userStore.logout();
+      const d = window.$dialog.warning({
+        title: "退出",
+        content: "真的要注销登录吗 ?",
+        positiveText: "确定",
+        onPositiveClick: () => {
+          d.loading = true;
+          return userStore.logout();
+        },
+        onNegativeClick: () => {
+          window.$message.error("不确定");
+        }
+      });
     };
     const handleSelect = (key: string) => {
       switch (key) {

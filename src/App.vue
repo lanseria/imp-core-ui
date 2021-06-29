@@ -1,10 +1,12 @@
 <template>
   <n-config-provider :theme="theme">
-    <n-notification-provider>
-      <n-message-provider>
-        <Slot />
-      </n-message-provider>
-    </n-notification-provider>
+    <n-dialog-provider>
+      <n-notification-provider>
+        <n-message-provider>
+          <Slot />
+        </n-message-provider>
+      </n-notification-provider>
+    </n-dialog-provider>
   </n-config-provider>
 </template>
 
@@ -14,6 +16,7 @@ import {
   NConfigProvider,
   NMessageProvider,
   NNotificationProvider,
+  NDialogProvider,
   darkTheme
 } from "naive-ui";
 import { useAppStore } from "./store/modules/app";
@@ -23,6 +26,7 @@ export default defineComponent({
     NConfigProvider,
     NMessageProvider,
     NNotificationProvider,
+    NDialogProvider,
     Slot
   },
   name: "App",

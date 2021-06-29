@@ -53,11 +53,14 @@ export const useUserStore = defineStore({
         const { data, msg, code } = await logoutReq();
         if (data) {
           console.log("用户登出成功");
+          return true;
         } else {
           console.error(msg, code, data);
+          return false;
         }
       } catch (error) {
         console.error(error);
+        return false;
       } finally {
         router.push({
           name: LoginRoute.name
