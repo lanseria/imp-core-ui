@@ -1,19 +1,27 @@
 <template>
   <n-config-provider :theme="theme">
-    <n-message-provider>
-      <router-view />
-    </n-message-provider>
+    <n-notification-provider>
+      <n-message-provider>
+        <router-view />
+      </n-message-provider>
+    </n-notification-provider>
   </n-config-provider>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { NConfigProvider, NMessageProvider, darkTheme } from "naive-ui";
+import {
+  NConfigProvider,
+  NMessageProvider,
+  NNotificationProvider,
+  darkTheme
+} from "naive-ui";
 import { useAppStore } from "./store/modules/app";
 export default defineComponent({
   components: {
     NConfigProvider,
-    NMessageProvider
+    NMessageProvider,
+    NNotificationProvider
   },
   name: "App",
   setup() {
