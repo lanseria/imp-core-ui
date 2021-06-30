@@ -18,11 +18,11 @@ export function useImpSubmit() {
   };
 
   const promiseValidate = (formRef: IObj) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       formRef.validate((errors: any) => {
         if (!errors) resolve(true);
         else {
-          showValidMessage(errors);
+          reject(errors);
         }
       });
     });
@@ -32,21 +32,17 @@ export function useImpSubmit() {
     try {
       impSubmitLoading.value = true;
       if (!formRef) {
-        throw "ref组件未加载成功";
+        window.$message.warning("ref组件未加载成功");
       }
       if (isRef(formRef)) {
-        throw "refs 组件未添加.value";
+        window.$message.warning("refs 组件未添加.value");
       }
       const valid = await promiseValidate(formRef);
       if (valid) {
-        try {
-          await cb();
-        } catch (error) {
-          console.log(error);
-        }
+        await cb();
       }
-    } catch (error) {
-      window.$message.warning(error);
+    } catch (errors) {
+      showValidMessage(errors);
     } finally {
       impSubmitLoading.value = false;
     }

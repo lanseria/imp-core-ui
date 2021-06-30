@@ -42,7 +42,7 @@
   </n-form>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { registerRules } from "./options";
 import {
   NForm,
@@ -57,8 +57,8 @@ import {
 import { PhonePortraitOutline as PhonePortraitOutlineIcon } from "@vicons/ionicons5";
 import { useImpSubmit } from "/@/hooks/useForm";
 import CodeInput from "./CodeInput.vue";
-import { router } from "/@/router";
 import { useUserStore } from "/@/store/modules/user";
+import { useImpRoute } from "/@/hooks/useRoute";
 export default defineComponent({
   components: {
     NForm,
@@ -76,6 +76,7 @@ export default defineComponent({
     // use
     const userStore = useUserStore();
     const { impSubmitLoading, impSubmit } = useImpSubmit();
+    const { routing, pushName } = useImpRoute();
     // refs
     const FormRef = ref();
     // ref
@@ -84,11 +85,13 @@ export default defineComponent({
       code: "",
       checkService: true
     });
+    // computed
+    const operating = computed(() => {
+      return impSubmitLoading.value || routing.value;
+    });
     // method
     const handleLogin = () => {
-      router.push({
-        name: "Login"
-      });
+      pushName("Login");
     };
 
     // method
@@ -115,8 +118,9 @@ export default defineComponent({
       // refs
       FormRef,
       // ref
-      impSubmitLoading,
       modelRef,
+      // computed
+      operating,
       // method
       handleLogin,
       handleSubmit

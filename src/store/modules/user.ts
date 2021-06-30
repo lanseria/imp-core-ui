@@ -35,24 +35,18 @@ export const useUserStore = defineStore({
       setUserInfo(this.userInfoLogin);
     },
     async login(data: LoginVO) {
-      try {
-        const form = encryption<LoginVO>({
-          data,
-          param: ["password"]
-        });
-        const body = await loginReq(form);
-        this.setUserToken(body);
-        this.gSetUserInfo();
-        router.push("/");
-      } catch (error) {
-        console.error(error);
-      }
+      const form = encryption<LoginVO>({
+        data,
+        param: ["password"]
+      });
+      const body = await loginReq(form);
+      this.setUserToken(body);
+      await router.push("/");
     },
     async smsLogin(data: SmsLoginVO) {
       try {
         const body = await smsLoginReq(data);
         this.setUserToken(body);
-        this.gSetUserInfo();
         router.push("/");
       } catch (error) {
         console.error(error);

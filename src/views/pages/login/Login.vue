@@ -51,13 +51,18 @@
           <n-button
             type="primary"
             block
-            :loading="impSubmitLoading"
+            :loading="operating"
+            :disabled="operating"
             @click="handleSubmit()"
             >登录</n-button
           >
         </n-grid-item>
         <n-grid-item>
-          <n-button block :loading="impSubmitLoading" @click="handleRegister()"
+          <n-button
+            block
+            :loading="operating"
+            :disabled="operating"
+            @click="handleRegister()"
             >注册</n-button
           >
         </n-grid-item>
@@ -82,12 +87,11 @@ import {
   KeyOutline as KeyOutlineIcon,
   KeypadOutline as KeypadOutlineIcon
 } from "@vicons/ionicons5";
-import { ref } from "vue";
-import { useIsTablet } from "/@/utils/composables";
+import { computed, ref } from "vue";
 import { loginRules } from "./options";
 import { useUserStore } from "/@/store/modules/user";
 import { useImpSubmit } from "/@/hooks/useForm";
-import { router } from "/@/router";
+import { useImpRoute } from "/@/hooks/useRoute";
 export default {
   components: {
     CodeImg,
@@ -104,9 +108,9 @@ export default {
   },
   setup() {
     // use
-    const isTabletRef = useIsTablet();
     const userStore = useUserStore();
     const { impSubmitLoading, impSubmit } = useImpSubmit();
+    const { routing, pushName } = useImpRoute();
     // refs
     const FormRef = ref();
     const CodeImgRef = ref<CodeImgRefs>();
@@ -117,7 +121,13 @@ export default {
       code: "",
       randomStr: ""
     });
+    // computed
+    const operating = computed(() => {
+      return impSubmitLoading.value || routing.value;
+    });
+    // method
     const refreshRandomStr = (randomStr: string) => {
+      modelRef.value.code = "";
       modelRef.value.randomStr = randomStr;
     };
     const submitAction = async () => {
@@ -133,10 +143,8 @@ export default {
     const handleSubmit = () => {
       impSubmit(FormRef.value, submitAction);
     };
-    const handleRegister = () => {
-      router.push({
-        name: "Register"
-      });
+    const handleRegister = async () => {
+      pushName("Register");
     };
     return {
       // const
@@ -145,9 +153,9 @@ export default {
       FormRef,
       CodeImgRef,
       // ref
-      impSubmitLoading,
       modelRef,
-      isTablet: isTabletRef,
+      // computed
+      operating,
       // method
       refreshRandomStr,
       handleSubmit,
