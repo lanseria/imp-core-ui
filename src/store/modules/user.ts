@@ -3,7 +3,6 @@ import { encryption } from "/@/utils/encrypt";
 import { loginReq, logoutReq, smsLoginReq } from "/@/api/Auth";
 import { setUserToken, setUserInfo } from "/@/utils/auth";
 import { userInfoReq } from "/@/api/Admin/User";
-import { LoginRoute } from "/@/router/routes";
 import { router } from "/@/router";
 
 interface UserState {
@@ -44,19 +43,20 @@ export const useUserStore = defineStore({
       await router.push("/");
     },
     async smsLogin(data: SmsLoginVO) {
-      try {
-        const body = await smsLoginReq(data);
-        this.setUserToken(body);
-        router.push("/");
-      } catch (error) {
-        console.error(error);
-      }
+      const body = await smsLoginReq(data);
+      this.setUserToken(body);
+      await router.push("/");
     },
     async logout() {
       try {
         const { data, msg, code } = await logoutReq();
         if (data) {
           console.log("用户登出成功");
+          // 不管有没有请求成功都是清空用户数据
+          this.removeAll();
+          await router.push({
+            name: "Login"
+          });
           return true;
         } else {
           console.error(msg, code, data);
@@ -65,12 +65,6 @@ export const useUserStore = defineStore({
       } catch (error) {
         console.error(error);
         return false;
-      } finally {
-        router.push({
-          name: LoginRoute.name
-        });
-        // 不管有没有请求成功都是清空用户数据
-        this.removeAll();
       }
     },
     async gSetUserInfo() {

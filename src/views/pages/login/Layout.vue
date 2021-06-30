@@ -1,6 +1,7 @@
 <template>
   <n-layout :native-scrollbar="false" position="absolute">
     <div class="banner" style="overflow: hidden">
+      <dark-mode-toggle class="dark-mode-toggle"></dark-mode-toggle>
       <right-image class="right-image" />
       <div class="login-main">
         <n-h1
@@ -24,6 +25,7 @@ import LandingFooter from "./Footer.vue";
 import leftImage from "./Left.vue";
 import rightImage from "./Right.vue";
 import { NLayout, NLayoutFooter, NH1 } from "naive-ui";
+import DarkModeToggle from "/@/components/DarkModeToggle.vue";
 export default {
   components: {
     LandingFooter,
@@ -31,7 +33,8 @@ export default {
     rightImage,
     NLayout,
     NLayoutFooter,
-    NH1
+    NH1,
+    DarkModeToggle
   },
   setup() {
     return {};
@@ -46,6 +49,12 @@ export default {
   flex-direction: column;
   position: relative;
   justify-content: center;
+}
+
+.dark-mode-toggle {
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
 
 .imp::after {
@@ -112,7 +121,6 @@ export default {
   }
 
   .login-main {
-    width: 100%;
     left: 0;
     position: relative;
   }

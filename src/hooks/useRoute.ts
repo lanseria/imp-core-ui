@@ -21,6 +21,13 @@ export const useImpRoute = () => {
     });
     routing.value = false;
   };
+  const pushPath = async (path: string) => {
+    routing.value = true;
+    await router.push({
+      path
+    });
+    routing.value = false;
+  };
   return {
     // ref
     routing,
@@ -30,6 +37,7 @@ export const useImpRoute = () => {
     // simple
     goBack,
     // push
-    pushName
+    pushName,
+    pushPath
   };
 };

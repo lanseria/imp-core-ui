@@ -6,9 +6,7 @@
     </n-text>
     <div></div>
     <div class="nav-end">
-      <n-button text class="nav-picker" @click="handleThemeUpdate">
-        {{ themeText }}
-      </n-button>
+      <dark-mode-toggle class="nav-picker"></dark-mode-toggle>
       <n-dropdown @select="handleSelect" trigger="click" :options="options">
         <n-button text :keyboard="false">{{ userInfo?.realName }}</n-button>
       </n-dropdown>
@@ -20,7 +18,7 @@
 import { computed } from "@vue/runtime-core";
 import { NLayoutHeader, NText, NButton, NDropdown } from "naive-ui";
 import { router } from "/@/router";
-import { useAppStore } from "/@/store/modules/app";
+import DarkModeToggle from "/@/components/DarkModeToggle.vue";
 import { useUserStore } from "/@/store/modules/user";
 
 export default {
@@ -29,25 +27,19 @@ export default {
     NLayoutHeader,
     NText,
     NButton,
-    NDropdown
+    NDropdown,
+    DarkModeToggle
   },
   setup() {
     // use
-    const appStore = useAppStore();
     const userStore = useUserStore();
     // computed
-    const themeText = computed(() => {
-      return appStore.getThemeText;
-    });
     const userInfo = computed(() => {
       return userStore.getUserInfo;
     });
     // method
     const handleLogoClick = () => {
       router.push("/");
-    };
-    const handleThemeUpdate = () => {
-      appStore.triggerTheme();
     };
     const handleLogout = () => {
       const d = window.$dialog.warning({
@@ -92,11 +84,9 @@ export default {
         }
       ],
       // computed
-      themeText,
       userInfo,
       // method
       handleLogoClick,
-      handleThemeUpdate,
       handleSelect
     };
   }
