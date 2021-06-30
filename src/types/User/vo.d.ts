@@ -4,3 +4,8 @@ interface LoginVO {
   randomStr: string;
   code: string;
 }
+
+interface SmsLoginVO {
+  mobile: string;
+  code: string;
+}

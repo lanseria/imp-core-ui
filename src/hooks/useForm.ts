@@ -1,8 +1,8 @@
-import { ref } from "vue";
+import { isRef, ref } from "vue";
 import { FieldErrorList } from "async-validator";
 
-export function useIepSubmit() {
-  const iepSubmitLoading = ref<boolean>(false);
+export function useImpSubmit() {
+  const impSubmitLoading = ref<boolean>(false);
 
   const showValidMessage = (error: FieldErrorList) => {
     for (const key in error) {
@@ -10,7 +10,7 @@ export function useIepSubmit() {
         const i = Object.keys(error).indexOf(key);
         if (i === 0) {
           const element = error[key];
-          console.log(element[0].message);
+          window.$message.warning(element[0].message);
           break;
         }
       }
@@ -18,22 +18,25 @@ export function useIepSubmit() {
   };
 
   const promiseValidate = (formRef: IObj) => {
-    return new Promise((resolve, reject) => {
-      // TODO: should remove value of Refs!
-      if (formRef) {
-        formRef.validate((errors: IObj) => {
-          if (!errors) resolve(true);
-          else reject(errors);
-        });
-      } else {
-        reject("ref组件未加载成功");
-      }
+    return new Promise(resolve => {
+      formRef.validate((errors: any) => {
+        if (!errors) resolve(true);
+        else {
+          showValidMessage(errors);
+        }
+      });
     });
   };
 
-  const iepSubmit = async (formRef: IObj, cb: Fn) => {
+  const impSubmit = async (formRef: IObj, cb: Fn) => {
     try {
-      iepSubmitLoading.value = true;
+      impSubmitLoading.value = true;
+      if (!formRef) {
+        throw "ref组件未加载成功";
+      }
+      if (isRef(formRef)) {
+        throw "refs 组件未添加.value";
+      }
       const valid = await promiseValidate(formRef);
       if (valid) {
         try {
@@ -43,13 +46,13 @@ export function useIepSubmit() {
         }
       }
     } catch (error) {
-      showValidMessage(error);
+      window.$message.warning(error);
     } finally {
-      iepSubmitLoading.value = false;
+      impSubmitLoading.value = false;
     }
   };
   return {
-    iepSubmitLoading,
-    iepSubmit
+    impSubmitLoading,
+    impSubmit
   };
 }

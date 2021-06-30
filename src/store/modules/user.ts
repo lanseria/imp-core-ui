@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { encryption } from "/@/utils/encrypt";
-import { loginReq, logoutReq } from "/@/api/Auth";
+import { loginReq, logoutReq, smsLoginReq } from "/@/api/Auth";
 import { setUserToken, setUserInfo } from "/@/utils/auth";
 import { userInfoReq } from "/@/api/Admin/User";
 import { LoginRoute } from "/@/router/routes";
@@ -41,6 +41,16 @@ export const useUserStore = defineStore({
           param: ["password"]
         });
         const body = await loginReq(form);
+        this.setUserToken(body);
+        this.gSetUserInfo();
+        router.push("/");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async smsLogin(data: SmsLoginVO) {
+      try {
+        const body = await smsLoginReq(data);
         this.setUserToken(body);
         this.gSetUserInfo();
         router.push("/");

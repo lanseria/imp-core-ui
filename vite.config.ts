@@ -1,35 +1,27 @@
 import { ConfigEnv, loadEnv, UserConfig } from "vite";
 import { resolve } from "path";
-import type { Alias } from "vite";
 import { createVitePlugins } from "./build/vite/plugins";
 
 function pathResolve(dir: string) {
   return resolve(__dirname, ".", dir);
 }
 
-function createAlias(alias: [string, string][]): Alias[] {
-  return alias.map(item => {
-    const [alia, src] = item;
-    return {
-      find: new RegExp(alia),
-      replacement: pathResolve(src) + "/"
-    };
-  });
-}
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
   const isBuild = command === "build";
   return {
-    base: "/",
+    // /
+    base: env.VITE_PUBLIC_PATH,
     root,
     resolve: {
-      alias: createAlias([
+      alias: [
         // /@/xxxx => src/xxxx
-        ["/@/", "src"],
-        ["/#/", "types"]
-      ]),
-      extensions: [".vue", ".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"]
+        {
+          find: /\/@\//,
+          replacement: pathResolve("src") + "/"
+        }
+      ]
     },
     build: {
       target: "esnext",

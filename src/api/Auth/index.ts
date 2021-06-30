@@ -1,4 +1,5 @@
 import r from "/@/router/axios";
+import { SmsLoginDTO } from "/@/types/User/dto";
 import { api, initalAppendForm, initalHeader } from "./config";
 
 export const loginReq = (data: LoginVO) => {
@@ -9,6 +10,19 @@ export const loginReq = (data: LoginVO) => {
     params: {
       ...data,
       ...initalAppendForm()
+    }
+  });
+};
+
+export const smsLoginReq = (data: SmsLoginVO) => {
+  const smsLoginDto = new SmsLoginDTO(data);
+  return r.request<UserTokenVO>({
+    url: api.smsLogin,
+    headers: initalHeader,
+    method: "POST",
+    params: {
+      ...smsLoginDto,
+      ...initalAppendForm("mobile")
     }
   });
 };

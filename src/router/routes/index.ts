@@ -29,11 +29,32 @@ export const RootRoute: AppRouteRecordRaw = {
 export const LoginRoute: AppRouteRecordRaw = {
   path: "/login",
   name: "Login",
-  component: () => import("/@/views/pages/login/Login.vue"),
+  component: () => import("/@/views/pages/login/Layout.vue"),
+  redirect: "/login/index",
   meta: {
     title: "登录",
     isAuth: false
-  }
+  },
+  children: [
+    {
+      path: "index",
+      name: "Login",
+      component: () => import("/@/views/pages/login/Login.vue"),
+      meta: {
+        title: "登录",
+        isAuth: false
+      }
+    },
+    {
+      path: "register",
+      name: "Register",
+      component: () => import("/@/views/pages/login/Register.vue"),
+      meta: {
+        title: "注册",
+        isAuth: false
+      }
+    }
+  ]
 };
 
 export const DashboardRoute: AppRouteRecordRaw = {
