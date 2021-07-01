@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export const useImpRoute = () => {
@@ -7,6 +7,13 @@ export const useImpRoute = () => {
   // use
   const route = useRoute();
   const router = useRouter();
+  // current
+  const crtName = computed(() => {
+    return route.name as string;
+  });
+  const crtMeta = computed(() => {
+    return route.meta;
+  });
   // simple
   const goBack = async () => {
     routing.value = true;
@@ -34,6 +41,9 @@ export const useImpRoute = () => {
     // use
     route,
     router,
+    // current
+    crtName,
+    crtMeta,
     // simple
     goBack,
     // push

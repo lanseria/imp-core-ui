@@ -6,6 +6,7 @@ import { setupStore } from "/@/store";
 
 import "/@/styles/index.css";
 import { initAppConfigStore } from "./logic/initAppConfig";
+import { registerGlobComp } from "./components/registerGlobComp";
 
 async function bootstrap() {
   const app = createApp(App);
@@ -17,7 +18,7 @@ async function bootstrap() {
   initAppConfigStore();
 
   // Register global components
-  // registerGlobComp(app);
+  registerGlobComp(app);
 
   // Multilingual configuration
   // await setupI18n(app);

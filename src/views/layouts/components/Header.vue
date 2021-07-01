@@ -18,9 +18,8 @@
 import { computed } from "@vue/runtime-core";
 import { NLayoutHeader, NText, NButton, NDropdown } from "naive-ui";
 import { router } from "/@/router";
-import DarkModeToggle from "/@/components/DarkModeToggle.vue";
+import DarkModeToggle from "/@/components/common/DarkModeToggle.vue";
 import { useUserStore } from "/@/store/modules/user";
-
 export default {
   name: "DashboardHeader",
   components: {
@@ -61,6 +60,9 @@ export default {
           handleLogout();
           break;
         case "dashboard":
+          router.push("/");
+          break;
+        case "center":
           router.push("/");
           break;
         default:

@@ -59,16 +59,6 @@
   ],
   "typescript.format.enable": false,
   "typescript.validate.enable": true,
-  "vetur.format.enable": false,
-  "vetur.validation.script": false,
-  "vetur.validation.template": false,
-  "vetur.validation.templateProps": false,
-  "vetur.validation.interpolation": false,
-  "vetur.completion.scaffoldSnippetSources": {
-    "workspace": "工作区设置",
-    "user": "",
-    "vetur": "默认插件设置"
-  },
   "workbench.editor.tabSizing": "shrink",
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -97,21 +87,13 @@
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vue-scss-variable-scan.globalPath": "src/styles/var.scss",
-  "vetur.completion.autoImport": false,
-  "vetur.format.defaultFormatter.css": "none",
-  "vetur.format.defaultFormatter.html": "none",
-  "vetur.format.defaultFormatter.js": "none",
-  "vetur.format.defaultFormatter.less": "none",
-  "vetur.format.defaultFormatter.postcss": "none",
-  "vetur.format.defaultFormatter.pug": "none",
-  "vetur.format.defaultFormatter.sass": "none",
-  "vetur.format.defaultFormatter.scss": "none",
-  "vetur.format.defaultFormatter.stylus": "none",
-  "vetur.format.defaultFormatter.ts": "none",
-  "vetur.languageFeatures.codeActions": false,
-  "vetur.languageFeatures.semanticTokens": false,
-  "vetur.languageFeatures.updateImportOnFileMove": false,
-  "vetur.underline.refValue": false,
-  "vetur.validation.style": false
+  "volar.codeLens.pugTools": false,
+  "volar.icon.splitEditors": false,
+  "volar.codeLens.scriptSetupTools": false,
+  "volar.preferredTagNameCase": "kebab",
+  "volar.tsPlugin": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": false,
+    "source.organizeImports": false
+  }
 }

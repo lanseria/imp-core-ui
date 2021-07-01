@@ -3,7 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { VitePWA } from "vite-plugin-pwa";
 import html from "vite-plugin-html";
-import viteESLint from "@ehutch79/vite-eslint";
 import { configVisualizerConfig } from "./visualizer";
 
 export function createVitePlugins(
@@ -12,18 +11,14 @@ export function createVitePlugins(
 ) {
   console.log(env);
   const fontIconUUID = env.VITE_FONTICONUUID;
-  const commonCss = [`//at.alicdn.com/t/${fontIconUUID}.css`];
-  const commonJs = [
-    "//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js",
-    `//at.alicdn.com/t/${fontIconUUID}.js`
-  ];
+  const commonCss: string[] = [];
+  const commonJs = [`https://at.alicdn.com/t/${fontIconUUID}.js`];
 
   const vitePlugins: (Plugin | Plugin[])[] = [
     // have to
     vue(),
     // have to
     vueJsx(),
-    viteESLint(),
     html({
       inject: {
         injectData: {

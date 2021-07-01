@@ -6,7 +6,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { NButton } from "naive-ui";
-import { useAppStore } from "../store/modules/app";
+import { useAppStore } from "/@/store/modules/app";
 export default defineComponent({
   name: "DarkModeToggle",
   components: {

@@ -3,6 +3,7 @@ import type { AppRouteRecordRaw, AppRouteModule } from "/@/router/types";
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from "/@/router/routes/basic";
 
 import { PageEnum } from "/@/enums/pageEnum";
+import { CenterRoute } from "/@/views/pages/center/route";
 
 // const modules = import.meta.globEager("./modules/**/*.ts");
 
@@ -63,7 +64,7 @@ export const DashboardRoute: AppRouteRecordRaw = {
   component: () => import("/@/views/layouts/dashboard/index.vue"),
   redirect: "/dashboard/index",
   meta: {
-    title: "主页",
+    title: "赋能台",
     isAuth: true
   },
   children: [
@@ -72,7 +73,7 @@ export const DashboardRoute: AppRouteRecordRaw = {
       name: "Dashboard",
       component: () => import("/@/views/pages/dashboard/index.vue"),
       meta: {
-        title: "主页",
+        title: "赋能台",
         isAuth: true
       }
     }
@@ -83,6 +84,7 @@ export const DashboardRoute: AppRouteRecordRaw = {
 export const basicRoutes = [
   LoginRoute,
   DashboardRoute,
+  CenterRoute,
   RootRoute,
   REDIRECT_ROUTE
 ];

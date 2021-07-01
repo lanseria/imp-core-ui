@@ -4,10 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/assets/images/naivelogo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <!-- 使用CDN加速的CSS文件，配置在vue.config.js下 -->
+    <% for (var i in css) { %>
+    <link href="<%= css[i] %>" id="stylesheet<%= i %>" rel="stylesheet" />
+    <% } %>
+    <title><%= title %></title>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
+    <!-- 使用CDN加速的JS文件，配置在vue.config.js下 -->
+    <% for (var i in js) { %>
+    <script src="<%= js[i] %>"></script>
+    <% } %>
   </body>
 </html>

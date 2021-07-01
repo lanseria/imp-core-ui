@@ -33,8 +33,9 @@
 import { defineComponent } from "vue";
 import { NLayout, NLayoutSider, NMenu } from "naive-ui";
 import { useIsMobile } from "/@/utils/composables";
-import DashboardHeader from "./Header.vue";
+import DashboardHeader from "../components/Header.vue";
 export default defineComponent({
+  name: "DashboardLayout",
   components: {
     NLayout,
     NLayoutSider,

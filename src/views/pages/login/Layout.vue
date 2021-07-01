@@ -25,7 +25,7 @@ import LandingFooter from "./Footer.vue";
 import leftImage from "./Left.vue";
 import rightImage from "./Right.vue";
 import { NLayout, NLayoutFooter, NH1 } from "naive-ui";
-import DarkModeToggle from "/@/components/DarkModeToggle.vue";
+import DarkModeToggle from "/@/components/common/DarkModeToggle.vue";
 export default {
   components: {
     LandingFooter,
