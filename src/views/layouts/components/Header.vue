@@ -8,7 +8,10 @@
     <div class="nav-end">
       <dark-mode-toggle class="nav-picker"></dark-mode-toggle>
       <n-dropdown @select="handleSelect" trigger="click" :options="options">
-        <n-button text :keyboard="false">{{ userInfo?.realName }}</n-button>
+        <n-space align="center" style="height: 42px">
+          <n-avatar :src="userInfo?.avatar" />
+          <n-button text :keyboard="false">{{ userInfo?.realName }}</n-button>
+        </n-space>
       </n-dropdown>
     </div>
   </n-layout-header>
@@ -16,7 +19,14 @@
 
 <script lang="ts">
 import { computed } from "@vue/runtime-core";
-import { NLayoutHeader, NText, NButton, NDropdown } from "naive-ui";
+import {
+  NLayoutHeader,
+  NText,
+  NButton,
+  NDropdown,
+  NAvatar,
+  NSpace
+} from "naive-ui";
 import { router } from "/@/router";
 import DarkModeToggle from "/@/components/common/DarkModeToggle.vue";
 import { useUserStore } from "/@/store/modules/user";
@@ -25,6 +35,8 @@ export default {
   components: {
     NLayoutHeader,
     NText,
+    NAvatar,
+    NSpace,
     NButton,
     NDropdown,
     DarkModeToggle
@@ -54,8 +66,9 @@ export default {
         }
       });
     };
-    const handleSelect = (key: string) => {
-      switch (key) {
+    const handleSelect = (key: Event) => {
+      // TODO: fix
+      switch (key as unknown as unknown as string) {
         case "logout":
           handleLogout();
           break;
