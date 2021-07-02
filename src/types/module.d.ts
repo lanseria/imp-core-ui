@@ -10,3 +10,5 @@ declare module "virtual:*" {
   const result: any;
   export default result;
 }
+
+declare module "@ehutch79/vite-eslint";

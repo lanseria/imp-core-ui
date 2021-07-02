@@ -6,7 +6,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     path: "base",
     name: "Base",
     meta: authMetaFunc("基本信息", {
-      icon: "el-icon-iep-gerenziliao"
+      icon: "icon-Shape"
     }),
     component: () => import(/* webpackChunkName: "page" */ "./base/index.vue")
   },
@@ -14,7 +14,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     path: "more",
     name: "More",
     meta: authMetaFunc("更多信息", {
-      icon: "el-icon-iep-more-info"
+      icon: "icon-gengduoziliao"
     }),
     component: () => import(/* webpackChunkName: "page" */ "./more/index.vue")
   },
@@ -22,7 +22,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     path: "security",
     name: "Security",
     meta: authMetaFunc("安全设置", {
-      icon: "el-icon-iep-yanzhengma"
+      icon: "icon-yanzhengma"
     }),
     component: () =>
       import(/* webpackChunkName: "page" */ "./security/index.vue")
@@ -31,7 +31,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     path: "account",
     name: "Account",
     meta: authMetaFunc("账号关联", {
-      icon: "el-icon-iep-guanlian"
+      icon: "icon-guanlian"
     }),
     component: () =>
       import(/* webpackChunkName: "page" */ "./account/index.vue")

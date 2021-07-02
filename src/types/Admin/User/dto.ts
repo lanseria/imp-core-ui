@@ -1,4 +1,4 @@
-import { CommonDTO } from "../Common/dto";
+import { CommonDTO } from "../../Common/dto";
 
 export class LoginDTO implements LoginVO {
   username = "";

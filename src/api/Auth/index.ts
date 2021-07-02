@@ -1,5 +1,5 @@
 import r from "/@/router/axios";
-import { SmsLoginDTO } from "/@/types/User/dto";
+import { SmsLoginDTO } from "/@/types/Admin/User/dto";
 import { api, initalAppendForm, initalHeader } from "./config";
 
 export const loginReq = (data: LoginVO) => {

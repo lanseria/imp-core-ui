@@ -49,7 +49,9 @@
     "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
+    "@ehutch79/vite-eslint": "^0.0.1",
     "@ls-lint/ls-lint": "^1.9.2",
+    "@rollup/plugin-eslint": "^8.0.1",
     "@types/crypto-js": "^4.0.1",
     "@types/echarts": "^4.9.3",
     "@types/fs-extra": "^9.0.11",

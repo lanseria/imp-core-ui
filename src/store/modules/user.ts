@@ -1,20 +1,25 @@
 import { defineStore } from "pinia";
 import { encryption } from "/@/utils/encrypt";
 import { loginReq, logoutReq, smsLoginReq } from "/@/api/Auth";
-import { setUserToken, setUserInfo } from "/@/utils/auth";
+import { setUserToken } from "/@/utils/auth";
 import { userInfoReq } from "/@/api/Admin/User";
+import { getMenuListReq } from "/@/api/Admin/Menu";
 import { router } from "/@/router";
 
 interface UserState {
   userToken: Nullable<UserTokenVO>;
   userInfoLogin: Nullable<UserInfoLoginVO>;
+  menus: Nullable<MenuTree[]>;
+  modules: Nullable<MenuGroupItemVO[]>;
 }
 
 export const useUserStore = defineStore({
   id: "app-user",
   state: (): UserState => ({
     userToken: null,
-    userInfoLogin: null
+    userInfoLogin: null,
+    menus: null,
+    modules: null
   }),
   getters: {
     getRoles(): number[] {
@@ -31,7 +36,12 @@ export const useUserStore = defineStore({
     },
     setUserInfo(userInfoLogin: Nullable<UserInfoLoginVO>) {
       this.userInfoLogin = userInfoLogin;
-      setUserInfo(this.userInfoLogin);
+    },
+    setMenus(menus: Nullable<MenuTree[]>) {
+      this.menus = menus;
+    },
+    setModules(modules: Nullable<MenuGroupItemVO[]>) {
+      this.modules = modules;
     },
     async login(data: LoginVO) {
       const form = encryption<LoginVO>({
@@ -68,12 +78,17 @@ export const useUserStore = defineStore({
       }
     },
     async gSetUserInfo() {
-      try {
-        const body = await userInfoReq();
-        this.setUserInfo(body.data);
-      } catch (error) {
-        throw new Error(error);
-      }
+      const body = await userInfoReq();
+      this.setUserInfo(body.data);
+    },
+    async gSetMenusModules() {
+      const { data } = await getMenuListReq();
+      this.setMenus(data.menu);
+      this.setModules(data.module);
+    },
+    async getAll() {
+      await this.gSetUserInfo();
+      await this.gSetMenusModules();
     },
     removeAll() {
       this.setUserToken(null);

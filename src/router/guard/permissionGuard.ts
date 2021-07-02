@@ -21,7 +21,7 @@ export function createPermissionGuard(router: Router) {
         if (isNil(userStore.getRoles) || userStore.getRoles.length === 0) {
           try {
             // 刷新页面不丢失token重新获取用户信息与菜单
-            await userStore.gSetUserInfo();
+            await userStore.getAll();
           } catch (error) {
             console.log("跳出info错误");
             console.error(error);

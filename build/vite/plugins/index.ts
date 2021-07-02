@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { VitePWA } from "vite-plugin-pwa";
 import html from "vite-plugin-html";
+import viteESLint from "@ehutch79/vite-eslint";
 import { configVisualizerConfig } from "./visualizer";
 
 export function createVitePlugins(
@@ -19,6 +20,7 @@ export function createVitePlugins(
     vue(),
     // have to
     vueJsx(),
+    viteESLint(),
     html({
       inject: {
         injectData: {

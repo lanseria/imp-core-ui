@@ -2,6 +2,7 @@
   <page-container>
     <template #extra>
       <n-button
+        type="primary"
         :loading="impSubmitLoading"
         :disabled="impSubmitLoading"
         @click="handleSubmit()"
@@ -35,7 +36,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { NGrid, NButton, NFormItemGi, NForm, NInput } from "naive-ui";
 import { useImpPageLoad } from "/@/hooks/useLoad";
 import { editDetailReq, informationReq } from "/@/api/Admin/User";
-import { UserDTO } from "/@/types/User/dto";
+import { UserDTO } from "/@/types/Admin/User/dto";
 import { useImpSubmit } from "/@/hooks/useForm";
 export default defineComponent({
   components: {

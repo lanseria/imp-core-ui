@@ -937,6 +937,14 @@
   resolved "https://registry.nlark.com/@css-render/vue3-ssr/download/@css-render/vue3-ssr-0.15.4.tgz#ae29bc76f7eb40830d0ecd8086ce3726a1c6e8e3"
   integrity sha1-rim8dvfrQIMNDs2Ahs43JqHG6OM=
 
+"@ehutch79/vite-eslint@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/@ehutch79/vite-eslint/-/vite-eslint-0.0.1.tgz#53359b3252dc60b115991e4e56331fa49592e6df"
+  integrity sha512-DaQq2xl3KfSTICl+w1bTikGxjwgxdrgF2ow+eIv9MDUzeYZUvb35nnsKy9KOAb5idMTemDtwQueJ5XxP0STrAg==
+  dependencies:
+    "@rollup/pluginutils" "^4.0.0"
+    eslint "^7.17.0"
+
 "@emotion/hash@~0.8.0":
   version "0.8.0"
   resolved "https://registry.nlark.com/@emotion/hash/download/@emotion/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
@@ -1040,6 +1048,14 @@
     "@babel/helper-module-imports" "^7.10.4"
     "@rollup/pluginutils" "^3.1.0"
 
+"@rollup/plugin-eslint@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.npmjs.org/@rollup/plugin-eslint/-/plugin-eslint-8.0.1.tgz#bf7462f96027613729b8a805caaa951dc23c333e"
+  integrity sha512-rTMAY4tKGBdbkHHQDaVhXNJg9tRmW7ihRAg7NQHiPUv13NFYBygIr+OYgpVNwSnGOH146BgCITSBAoMxMQGPTQ==
+  dependencies:
+    "@rollup/pluginutils" "^4.0.0"
+    eslint "^7.12.0"
+
 "@rollup/plugin-node-resolve@^11.2.1":
   version "11.2.1"
   resolved "https://registry.npmjs.org/@rollup/plugin-node-resolve/-/plugin-node-resolve-11.2.1.tgz#82aa59397a29cd4e13248b106e6a4a1880362a60"
@@ -1069,7 +1085,7 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@rollup/pluginutils@^4.1.0":
+"@rollup/pluginutils@^4.0.0", "@rollup/pluginutils@^4.1.0":
   version "4.1.0"
   resolved "https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-4.1.0.tgz#0dcc61c780e39257554feb7f77207dceca13c838"
   integrity sha512-TrBhfJkFxA+ER+ew2U2/fHbebhLT/l/2pRk0hfj9KusXUuRXd2v0R58AfaZK9VXDQ4TogOSEmICVrQAA3zFnHQ==
@@ -2103,7 +2119,7 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.nlark.com/eslint-visitor-keys/download/eslint-visitor-keys-2.1.0.tgz?cache=0&sync_timestamp=1624559054225&other_urls=https%3A%2F%2Fregistry.nlark.com%2Feslint-visitor-keys%2Fdownload%2Feslint-visitor-keys-2.1.0.tgz#f65328259305927392c938ed44eb0a5c9b2bd303"
   integrity sha1-9lMoJZMFknOSyTjtROsKXJsr0wM=
 
-eslint@^7.24.0:
+eslint@^7.12.0, eslint@^7.17.0, eslint@^7.24.0:
   version "7.29.0"
   resolved "https://registry.nlark.com/eslint/download/eslint-7.29.0.tgz#ee2a7648f2e729485e4d0bd6383ec1deabc8b3c0"
   integrity sha1-7ip2SPLnKUheTQvWOD7B3qvIs8A=
