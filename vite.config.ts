@@ -48,6 +48,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     //   }
     // },
     server: {
+      host: env.VITE_HOST,
       port: +env.VITE_PORT,
       // Load proxy configuration from .env
       // 从.env中加载代理配置
