@@ -30,6 +30,6 @@ export const smsLoginReq = (data: SmsLoginVO) => {
 export const logoutReq = () => {
   return r.request<R<boolean>>({
     url: api.logout,
-    method: "POST"
+    method: "DELETE"
   });
 };

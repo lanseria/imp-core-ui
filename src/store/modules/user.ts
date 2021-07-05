@@ -4,13 +4,16 @@ import { loginReq, logoutReq, smsLoginReq } from "/@/api/Auth";
 import { setUserToken } from "/@/utils/auth";
 import { userInfoReq } from "/@/api/Admin/User";
 import { getMenuListReq } from "/@/api/Admin/Menu";
-import { router } from "/@/router";
+import { addRouteByMenu, router } from "/@/router";
+import { RouteRecordRaw } from "vue-router";
 
 interface UserState {
   userToken: Nullable<UserTokenVO>;
   userInfoLogin: Nullable<UserInfoLoginVO>;
   menus: Nullable<MenuTree[]>;
   modules: Nullable<MenuGroupItemVO[]>;
+  menuComponentTreeMap: MenuComponentTreeMap;
+  enableWorkbenchList: RouteRecordRaw[];
 }
 
 export const useUserStore = defineStore({
@@ -19,7 +22,9 @@ export const useUserStore = defineStore({
     userToken: null,
     userInfoLogin: null,
     menus: null,
-    modules: null
+    modules: null,
+    menuComponentTreeMap: new Map(),
+    enableWorkbenchList: []
   }),
   getters: {
     getRoles(): number[] {
@@ -85,6 +90,17 @@ export const useUserStore = defineStore({
       const { data } = await getMenuListReq();
       this.setMenus(data.menu);
       this.setModules(data.module);
+      // console.log("拿到路由, 构建路由, 返回可访问工作台列表");
+      if (this.menus && this.modules) {
+        const [enableWorkbenchList, menuComponentTreeMap] = addRouteByMenu(
+          this.menus,
+          this.modules
+        );
+        // 通过路由映射不同的菜单组
+        this.menuComponentTreeMap = menuComponentTreeMap;
+        // 全部可访问的工作台
+        this.enableWorkbenchList = enableWorkbenchList;
+      }
     },
     async getAll() {
       await this.gSetUserInfo();
