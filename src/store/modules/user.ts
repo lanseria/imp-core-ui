@@ -6,16 +6,18 @@ import { userInfoReq } from "/@/api/Admin/User";
 import { getMenuListReq } from "/@/api/Admin/Menu";
 import { addRouteByMenu, resetRouter, router } from "/@/router";
 import { RouteRecordRaw } from "vue-router";
-import { DashboardRoute } from "/@/router/routes";
-import { CenterRoute } from "/@/views/pages/center/route";
+import { getDictAllMapReq } from "/@/api/Admin/Dict";
 
 interface UserState {
   userToken: Nullable<UserTokenVO>;
   userInfoLogin: Nullable<UserInfoLoginVO>;
+  // menu
   menus: Nullable<MenuTree[]>;
   modules: Nullable<MenuGroupItemVO[]>;
   menuComponentTreeMap: MenuComponentTreeMap;
   enableWorkbenchList: RouteRecordRaw[];
+  // dict
+  dataDict: Map<string, DictVO[]>;
 }
 
 export const useUserStore = defineStore({
@@ -26,7 +28,8 @@ export const useUserStore = defineStore({
     menus: null,
     modules: null,
     menuComponentTreeMap: new Map(),
-    enableWorkbenchList: []
+    enableWorkbenchList: [],
+    dataDict: new Map()
   }),
   getters: {
     getRoles(): number[] {
@@ -65,6 +68,15 @@ export const useUserStore = defineStore({
         this.menuComponentTreeMap = new Map();
         this.enableWorkbenchList = [];
         resetRouter();
+      }
+    },
+    setDataDict(dataDict: Nullable<DictDirectory>) {
+      if (dataDict) {
+        const dictEntries = Object.entries(dataDict);
+        const dictMap = new Map(dictEntries);
+        this.dataDict = dictMap;
+      } else {
+        this.dataDict = new Map();
       }
     },
     async login(data: LoginVO) {
@@ -109,14 +121,20 @@ export const useUserStore = defineStore({
       const { data } = await getMenuListReq();
       this.setMenusModules(data);
     },
+    async gSetDataDict() {
+      const body = await getDictAllMapReq();
+      this.setDataDict(body.data);
+    },
     async getAll() {
       await this.gSetUserInfo();
       await this.gSetMenusModules();
+      await this.gSetDataDict();
     },
     removeAll() {
       this.setUserToken(null);
       this.setUserInfo(null);
       this.setMenusModules(null);
+      this.setDataDict(null);
     }
   }
 });

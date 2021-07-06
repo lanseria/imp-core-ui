@@ -91,9 +91,5 @@
   "volar.icon.splitEditors": false,
   "volar.preferredTagNameCase": "kebab",
   "volar.tsPlugin": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": false,
-    "source.organizeImports": false
-  },
   "volar.autoCompleteRefs": true
 }
