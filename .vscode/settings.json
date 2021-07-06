@@ -11,22 +11,8 @@
   "editor.fontLigatures": true,
   "eslint.format.enable": false,
   "eslint.alwaysShowStatus": false,
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "html",
-    "vue",
-    "markdown"
-  ],
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "vue",
-    "javascriptreact",
-    "typescriptreact"
-  ],
+  "eslint.probe": [],
+  "eslint.validate": [],
   "extensions.ignoreRecommendations": false,
   "files.autoSaveDelay": 1000,
   "files.eol": "\n",

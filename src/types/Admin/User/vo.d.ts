@@ -54,3 +54,19 @@ interface UserVO {
   trainingSituation: IObj[];
   userCert: IObj[];
 }
+
+interface UserPageItemVO {
+  createTime: string;
+  orgNames: IdName[];
+  phone: string;
+  realName: string;
+  roleList: IdName[];
+  userId: number;
+  username: string;
+}
+
+interface AdminUserPageItemVO extends UserPageItemVO {
+  assetOrgId: number;
+  avatar: string;
+  orgId: number;
+}

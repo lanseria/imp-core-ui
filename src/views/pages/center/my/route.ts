@@ -35,5 +35,14 @@ export const myRoute: AppRouteRecordRaw[] = [
     }),
     component: () =>
       import(/* webpackChunkName: "page" */ "./account/index.vue")
+  },
+  {
+    path: "table-demo",
+    name: "TableDemo",
+    meta: authMetaFunc("用户管理(Table)", {
+      icon: "icon-guanlian"
+    }),
+    component: () =>
+      import(/* webpackChunkName: "page" */ "./table-demo/index.vue")
   }
 ];

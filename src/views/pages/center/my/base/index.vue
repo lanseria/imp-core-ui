@@ -39,13 +39,6 @@
             placeholder="请选择最高学历"
           ></data-dict-select>
         </n-form-item-gi>
-
-        <n-form-item-gi :span="12" label="外语水平" path="language">
-          <n-input
-            placeholder="请输入外语水平"
-            v-model:value="modelRef.language"
-          />
-        </n-form-item-gi>
         <n-form-item-gi :span="12" label="外语水平" path="language">
           <n-input
             placeholder="请输入外语水平"

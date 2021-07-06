@@ -31,3 +31,11 @@ export const editDetailReq = (data: UserVO) => {
     data
   });
 };
+
+export const adminUserPageReq = (params: Partial<PageParam>) => {
+  return r.request<R<PageResult<AdminUserPageItemVO>>>({
+    url: api.page,
+    method: "GET",
+    params
+  });
+};
