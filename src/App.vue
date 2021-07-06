@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="theme">
+  <n-config-provider :theme="theme" :locale="locale" :date-locale="dateLocale">
     <n-dialog-provider>
       <n-notification-provider>
         <n-message-provider>
@@ -17,7 +17,9 @@ import {
   NMessageProvider,
   NNotificationProvider,
   NDialogProvider,
-  darkTheme
+  darkTheme,
+  zhCN,
+  dateZhCN
 } from "naive-ui";
 import { useAppStore } from "./store/modules/app";
 import Slot from "/@/views/layouts/Slot.vue";
@@ -36,7 +38,9 @@ export default defineComponent({
       return appStore.getTheme === "dark" ? darkTheme : null;
     });
     return {
-      theme
+      theme,
+      locale: zhCN,
+      dateLocale: dateZhCN
     };
   }
 });
