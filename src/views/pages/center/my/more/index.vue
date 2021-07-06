@@ -1,5 +1,5 @@
 <template>
-  <page-container>
+  <imp-page-container>
     <template #extra>
       <n-button
         type="primary"
@@ -31,7 +31,7 @@
         </n-form-item-gi>
       </n-grid>
     </n-form>
-  </page-container>
+  </imp-page-container>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";

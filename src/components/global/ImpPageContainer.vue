@@ -16,7 +16,7 @@ import { NPageHeader, NCard } from "naive-ui";
 import { computed, defineComponent } from "vue";
 import { useImpRoute } from "/@/hooks/useRoute";
 export default defineComponent({
-  name: "PageContainer",
+  name: "ImpPageContainer",
   props: {
     isBack: {
       type: Boolean,

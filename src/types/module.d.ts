@@ -12,3 +12,4 @@ declare module "virtual:*" {
 }
 
 declare module "@ehutch79/vite-eslint";
+declare module "vue-advanced-cropper";

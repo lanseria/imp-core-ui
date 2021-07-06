@@ -1,5 +1,5 @@
 <template>
-  <page-container> </page-container>
+  <imp-page-container> </imp-page-container>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
