@@ -4,20 +4,26 @@ import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from "/@/router/routes/basic";
 
 import { PageEnum } from "/@/enums/pageEnum";
 import { CenterRoute } from "/@/views/pages/center/route";
+import {
+  DASHBOARD_NAME,
+  LOGIN_NAME,
+  REGISTER_NAME,
+  ROOT_NAME
+} from "../constant";
 
 export const RootRoute: AppRouteRecordRaw = {
   path: "/",
-  name: "Root",
+  name: ROOT_NAME,
   redirect: PageEnum.BASE_HOME,
   meta: {
-    title: "Root",
+    title: ROOT_NAME,
     isAuth: false
   }
 };
 
 export const LoginRoute: AppRouteRecordRaw = {
   path: "/login",
-  name: "Login",
+  name: LOGIN_NAME,
   component: () => import("/@/views/pages/login/Layout.vue"),
   redirect: "/login/index",
   meta: {
@@ -27,7 +33,7 @@ export const LoginRoute: AppRouteRecordRaw = {
   children: [
     {
       path: "index",
-      name: "Login",
+      name: LOGIN_NAME,
       component: () => import("/@/views/pages/login/Login.vue"),
       meta: {
         title: "登录",
@@ -36,7 +42,7 @@ export const LoginRoute: AppRouteRecordRaw = {
     },
     {
       path: "register",
-      name: "Register",
+      name: REGISTER_NAME,
       component: () => import("/@/views/pages/login/Register.vue"),
       meta: {
         title: "注册",
@@ -48,7 +54,7 @@ export const LoginRoute: AppRouteRecordRaw = {
 
 export const DashboardRoute: AppRouteRecordRaw = {
   path: "/dashboard",
-  name: "Dashboard",
+  name: DASHBOARD_NAME,
   component: () => import("/@/views/layouts/dashboard/index.vue"),
   redirect: "/dashboard/index",
   meta: {
@@ -58,7 +64,7 @@ export const DashboardRoute: AppRouteRecordRaw = {
   children: [
     {
       path: "index",
-      name: "Dashboard",
+      name: DASHBOARD_NAME,
       component: () => import("/@/views/pages/dashboard/index.vue"),
       meta: {
         title: "赋能台",

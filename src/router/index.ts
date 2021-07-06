@@ -2,8 +2,14 @@ import type { RouteRecordRaw } from "vue-router";
 import type { App } from "vue";
 
 import { createRouter, createWebHistory } from "vue-router";
-import { basicRoutes, LoginRoute } from "./routes";
-import { REDIRECT_NAME } from "./constant";
+import { basicRoutes } from "./routes";
+import {
+  CENTER_NAME,
+  DASHBOARD_NAME,
+  ERROR_NAME,
+  LOGIN_NAME,
+  REDIRECT_NAME
+} from "./constant";
 import { splicingRouterString } from "../utils/common";
 import { hadAuthMeta } from "./config";
 import BlankLayout from "/@/views/layouts/default/index.vue";
@@ -12,7 +18,13 @@ import CenterLayout from "/@/views/layouts/center/index.vue";
 import { randomStr } from "../utils/random";
 import { groupBy } from "lodash-es";
 
-const WHITE_NAME_LIST = [LoginRoute.name, REDIRECT_NAME];
+const WHITE_NAME_LIST = [
+  LOGIN_NAME,
+  REDIRECT_NAME,
+  ERROR_NAME,
+  DASHBOARD_NAME,
+  CENTER_NAME
+];
 
 // app router
 export const router = createRouter({

@@ -4,8 +4,10 @@ import { loginReq, logoutReq, smsLoginReq } from "/@/api/Auth";
 import { setUserToken } from "/@/utils/auth";
 import { userInfoReq } from "/@/api/Admin/User";
 import { getMenuListReq } from "/@/api/Admin/Menu";
-import { addRouteByMenu, router } from "/@/router";
+import { addRouteByMenu, resetRouter, router } from "/@/router";
 import { RouteRecordRaw } from "vue-router";
+import { DashboardRoute } from "/@/router/routes";
+import { CenterRoute } from "/@/views/pages/center/route";
 
 interface UserState {
   userToken: Nullable<UserTokenVO>;
@@ -42,11 +44,28 @@ export const useUserStore = defineStore({
     setUserInfo(userInfoLogin: Nullable<UserInfoLoginVO>) {
       this.userInfoLogin = userInfoLogin;
     },
-    setMenus(menus: Nullable<MenuTree[]>) {
-      this.menus = menus;
-    },
-    setModules(modules: Nullable<MenuGroupItemVO[]>) {
-      this.modules = modules;
+    setMenusModules(data: Nullable<MenuModuleVO>) {
+      if (data) {
+        this.menus = data.menu;
+        this.modules = data.module;
+        // console.log("拿到路由, 构建路由, 返回可访问工作台列表");
+        if (this.menus && this.modules) {
+          const [enableWorkbenchList, menuComponentTreeMap] = addRouteByMenu(
+            this.menus,
+            this.modules
+          );
+          // 通过路由映射不同的菜单组
+          this.menuComponentTreeMap = menuComponentTreeMap;
+          // 全部可访问的工作台
+          this.enableWorkbenchList = enableWorkbenchList;
+        }
+      } else {
+        this.menus = null;
+        this.modules = null;
+        this.menuComponentTreeMap = new Map();
+        this.enableWorkbenchList = [];
+        resetRouter();
+      }
     },
     async login(data: LoginVO) {
       const form = encryption<LoginVO>({
@@ -88,19 +107,7 @@ export const useUserStore = defineStore({
     },
     async gSetMenusModules() {
       const { data } = await getMenuListReq();
-      this.setMenus(data.menu);
-      this.setModules(data.module);
-      // console.log("拿到路由, 构建路由, 返回可访问工作台列表");
-      if (this.menus && this.modules) {
-        const [enableWorkbenchList, menuComponentTreeMap] = addRouteByMenu(
-          this.menus,
-          this.modules
-        );
-        // 通过路由映射不同的菜单组
-        this.menuComponentTreeMap = menuComponentTreeMap;
-        // 全部可访问的工作台
-        this.enableWorkbenchList = enableWorkbenchList;
-      }
+      this.setMenusModules(data);
     },
     async getAll() {
       await this.gSetUserInfo();
@@ -109,6 +116,7 @@ export const useUserStore = defineStore({
     removeAll() {
       this.setUserToken(null);
       this.setUserInfo(null);
+      this.setMenusModules(null);
     }
   }
 });

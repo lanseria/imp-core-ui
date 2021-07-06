@@ -1,4 +1,10 @@
 export const REDIRECT_NAME = "Redirect";
+export const ERROR_NAME = "ErrorPage";
+export const LOGIN_NAME = "Login";
+export const ROOT_NAME = "Root";
+export const REGISTER_NAME = "Register";
+export const DASHBOARD_NAME = "Dashboard";
+export const CENTER_NAME = "Center";
 
 export const PARENT_LAYOUT_NAME = "ParentLayout";
 
