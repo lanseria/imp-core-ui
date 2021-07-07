@@ -8,7 +8,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     meta: authMetaFunc("基本信息", {
       icon: "icon-Shape"
     }),
-    component: () => import(/* webpackChunkName: "page" */ "./base/index.vue")
+    component: () => import("./base/index.vue")
   },
   {
     path: "more",
@@ -16,7 +16,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     meta: authMetaFunc("更多信息", {
       icon: "icon-gengduoziliao"
     }),
-    component: () => import(/* webpackChunkName: "page" */ "./more/index.vue")
+    component: () => import("./more/index.vue")
   },
   {
     path: "security",
@@ -24,8 +24,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     meta: authMetaFunc("安全设置", {
       icon: "icon-yanzhengma"
     }),
-    component: () =>
-      import(/* webpackChunkName: "page" */ "./security/index.vue")
+    component: () => import("./security/index.vue")
   },
   {
     path: "account",
@@ -33,8 +32,7 @@ export const myRoute: AppRouteRecordRaw[] = [
     meta: authMetaFunc("账号关联", {
       icon: "icon-guanlian"
     }),
-    component: () =>
-      import(/* webpackChunkName: "page" */ "./account/index.vue")
+    component: () => import("./account/index.vue")
   },
   {
     path: "table-demo",
@@ -42,7 +40,6 @@ export const myRoute: AppRouteRecordRaw[] = [
     meta: authMetaFunc("用户管理(Table)", {
       icon: "icon-guanlian"
     }),
-    component: () =>
-      import(/* webpackChunkName: "page" */ "./table-demo/index.vue")
+    component: () => import("./table-demo/index.vue")
   }
 ];
