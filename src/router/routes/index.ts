@@ -4,12 +4,7 @@ import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from "/@/router/routes/basic";
 
 import { PageEnum } from "/@/enums/pageEnum";
 import { CenterRoute } from "/@/views/pages/center/route";
-import {
-  DASHBOARD_NAME,
-  LOGIN_NAME,
-  REGISTER_NAME,
-  ROOT_NAME
-} from "../constant";
+import { LOGIN_NAME, REGISTER_NAME, ROOT_NAME } from "../constant";
 
 export const RootRoute: AppRouteRecordRaw = {
   path: "/",
@@ -52,32 +47,9 @@ export const LoginRoute: AppRouteRecordRaw = {
   ]
 };
 
-export const DashboardRoute: AppRouteRecordRaw = {
-  path: "/dashboard",
-  name: DASHBOARD_NAME,
-  component: () => import("/@/views/layouts/dashboard/index.vue"),
-  redirect: "/dashboard/index",
-  meta: {
-    title: "赋能台",
-    isAuth: true
-  },
-  children: [
-    {
-      path: "index",
-      name: DASHBOARD_NAME,
-      component: () => import("/@/views/pages/dashboard/index.vue"),
-      meta: {
-        title: "赋能台",
-        isAuth: true
-      }
-    }
-  ]
-};
-
 // Basic routing without permission
 export const basicRoutes = [
   LoginRoute,
-  DashboardRoute,
   CenterRoute,
   RootRoute,
   REDIRECT_ROUTE,
