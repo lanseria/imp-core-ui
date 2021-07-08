@@ -74,15 +74,15 @@ interface MenuModuleVO {
  * 用来给菜单组件的数据结构
  */
 interface MenuComponentTree {
-  icon: string;
-  name: string;
+  icon?: string;
+  label: string;
   /**
    * fullPath => index
    * /workbench/ed/home/data
    */
-  fullPath: string;
+  key: string;
   hidden: boolean;
-  children: MenuComponentTree[];
+  children?: MenuComponentTree[];
 }
 
 type MenuComponentTreeMap = Map<string, MenuComponentTree[]>;

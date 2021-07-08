@@ -111,9 +111,10 @@ const transferMenu = (
     const [childrenToItem, childrenToComp] = !isChild
       ? [[], []]
       : transferMenu(aMenu.children, aMenu, wbName, gName);
-    const redirect = childrenToItem.length
-      ? childrenToComp[0].fullPath
-      : undefined;
+    const redirect =
+      childrenToItem.length && childrenToComp.length
+        ? childrenToComp[0].key
+        : undefined;
     const meta = {
       name: name,
       metaName: metaName,
@@ -154,16 +155,16 @@ const transferMenu = (
         };
     // 组装菜单组件数据结构对象
     const menuComp: MenuComponentTree = {
-      icon,
-      name: aMenu.name,
-      fullPath,
+      // icon,
+      label: aMenu.name,
+      key: fullPath,
       hidden: aMenu.hidden,
-      children: childrenToComp
+      children: childrenToComp.length ? childrenToComp : undefined
     };
     menuRouter.push(menuItem);
     menuComponent.push(menuComp);
   }
-  return [menuRouter, menuComponent];
+  return [menuRouter, menuComponent.filter(m => !m.hidden)];
 };
 
 const generateEdRouter = (

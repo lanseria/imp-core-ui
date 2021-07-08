@@ -15,7 +15,11 @@
       trigger-style="top: calc(50% - var(--header-height));"
     >
       <dashboard-select></dashboard-select>
-      <n-menu :value="menuValue" :options="menuGroup" />
+      <n-menu
+        :value="activeMenu"
+        :options="menuGroup"
+        @update:value="handleSelect"
+      />
     </n-layout-sider>
     <n-layout
       ref="layoutInstRef"
@@ -29,7 +33,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted } from "vue";
-import { NLayout, NLayoutSider, NMenu } from "naive-ui";
+import { MenuGroupOption, NLayout, NLayoutSider, NMenu } from "naive-ui";
 import DashboardSelect from "./DashboardSelect.vue";
 import { useImpRoute } from "/@/hooks/useRoute";
 import { useUserStore } from "/@/store/modules/user";
@@ -42,8 +46,14 @@ export default defineComponent({
     DashboardSelect
   },
   setup() {
-    const { crtMatched } = useImpRoute();
+    const { crtMatched, crtPath, pushPath } = useImpRoute();
     // computed
+    const activeMenu = computed(() => {
+      if (crtPath.value.endsWith("/page")) {
+        return crtPath.value.replace("/page", "");
+      }
+      return crtPath.value;
+    });
     const activeWorkbench = computed(() => {
       return crtMatched.value[1].path;
     });
@@ -58,44 +68,25 @@ export default defineComponent({
       const userStore = useUserStore();
       const menuMap: MenuComponentTreeMap = userStore.menuComponentTreeMap;
       if (menuMap.has(activeMenuGroup.value)) {
-        const menu = menuMap.get(activeMenuGroup.value);
-        const dfs = (node: any) => {
-          if (node.children && node.children.length) {
-            for (let i = 0; i < node.children.length; i++) {
-              const m = node.children[i];
-              if (node.children[i].hidden) {
-                delete node.children[i];
-              } else {
-                dfs(m);
-              }
-            }
-          } else {
-            node.label = node.name;
-            node.key = node.fullPath;
-            delete node.icon;
-            delete node.name;
-            delete node.fullPath;
-          }
-        };
-        menu?.forEach(m => dfs(m));
-        return menu;
+        const menus = menuMap.get(activeMenuGroup.value);
+        return menus! as unknown as MenuGroupOption[];
       }
       return [];
     });
+    // method
+    const handleSelect = (key: string) => {
+      pushPath(key);
+    };
     onMounted(() => {
       //
     });
     return {
-      menuValue: null,
-      options: [
-        {
-          label: "1973年的弹珠玩具",
-          key: "pinball-1973"
-        }
-      ],
       // computed
+      activeMenu,
       activeWorkbench,
-      menuGroup
+      menuGroup,
+      // method
+      handleSelect
     };
   }
 });
