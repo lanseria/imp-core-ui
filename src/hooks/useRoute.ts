@@ -11,8 +11,17 @@ export const useImpRoute = () => {
   const crtName = computed(() => {
     return route.name as string;
   });
+  const crtPath = computed(() => {
+    return route.path as string;
+  });
+  const crtFullpath = computed(() => {
+    return route.fullPath as string;
+  });
   const crtMeta = computed(() => {
     return route.meta;
+  });
+  const crtMatched = computed(() => {
+    return route.matched;
   });
   // simple
   const goBack = async () => {
@@ -35,6 +44,19 @@ export const useImpRoute = () => {
     });
     routing.value = false;
   };
+  // replace
+  const replacePath = async (path: string) => {
+    routing.value = true;
+    await router.replace({
+      path
+    });
+    routing.value = false;
+  };
+  const replaceFullpath = async (fullPath: string) => {
+    routing.value = true;
+    await router.replace(fullPath);
+    routing.value = false;
+  };
   return {
     // ref
     routing,
@@ -44,10 +66,16 @@ export const useImpRoute = () => {
     // current
     crtName,
     crtMeta,
+    crtPath,
+    crtFullpath,
+    crtMatched,
     // simple
     goBack,
     // push
     pushName,
-    pushPath
+    pushPath,
+    // replace
+    replacePath,
+    replaceFullpath
   };
 };

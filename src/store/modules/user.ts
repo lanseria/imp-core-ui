@@ -9,6 +9,7 @@ import { RouteRecordRaw } from "vue-router";
 import { getDictAllMapReq } from "/@/api/Admin/Dict";
 
 interface UserState {
+  userLogin: boolean;
   userToken: Nullable<UserTokenVO>;
   userInfoLogin: Nullable<UserInfoLoginVO>;
   // menu
@@ -23,6 +24,7 @@ interface UserState {
 export const useUserStore = defineStore({
   id: "app-user",
   state: (): UserState => ({
+    userLogin: false,
     userToken: null,
     userInfoLogin: null,
     menus: null,
@@ -46,6 +48,7 @@ export const useUserStore = defineStore({
     },
     setUserInfo(userInfoLogin: Nullable<UserInfoLoginVO>) {
       this.userInfoLogin = userInfoLogin;
+      this.userLogin = !!userInfoLogin;
     },
     setMenusModules(data: Nullable<MenuModuleVO>) {
       if (data) {
@@ -93,29 +96,32 @@ export const useUserStore = defineStore({
       this.setUserToken(body);
       await router.push("/");
     },
-    async logout() {
-      try {
-        const { data, msg, code } = await logoutReq();
-        if (data) {
-          console.log("用户登出成功");
-          // 不管有没有请求成功都是清空用户数据
-          this.removeAll();
-          await router.push({
-            name: "Login"
-          });
-          return true;
-        } else {
-          console.error(msg, code, data);
-          return false;
-        }
-      } catch (error) {
-        console.error(error);
+    async logout(redirect?: string) {
+      const { data, msg, code } = await logoutReq();
+      if (data) {
+        console.log("用户登出成功");
+        // 不管有没有请求成功都是清空用户数据
+        this.removeAll();
+        await router.push({
+          name: "Login",
+          ...(redirect
+            ? {
+                query: {
+                  redirect
+                }
+              }
+            : {})
+        });
+        return true;
+      } else {
+        console.error(msg, code, data);
         return false;
       }
     },
     async gSetUserInfo() {
       const body = await userInfoReq();
       this.setUserInfo(body.data);
+      this.userLogin = true;
     },
     async gSetMenusModules() {
       const { data } = await getMenuListReq();

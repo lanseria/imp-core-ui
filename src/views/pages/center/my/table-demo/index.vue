@@ -22,7 +22,6 @@
     <n-data-table
       remote
       :loading="loading"
-      :paging="false"
       :columns="columns"
       :data="pagedTable"
       :pagination="pagination"

@@ -3,6 +3,7 @@ import qs from "qs";
 import { getUserToken } from "/@/utils/auth";
 import { requestTimeout, requestBaseURL } from "./config";
 import { useUserStore } from "../store/modules/user";
+import { router } from "./index";
 
 const request = axios.create({
   timeout: requestTimeout,
@@ -43,7 +44,7 @@ request.interceptors.response.use(
       });
     };
     const clearInfoToLogin = () => {
-      userStore.logout();
+      userStore.logout(router.currentRoute.value.fullPath);
     };
     const build500ErrorMsg = (msg: string) => {
       if (msg === undefined) {
@@ -85,8 +86,8 @@ request.interceptors.response.use(
       const msg = getErrorCode(status);
       // 除了验证400以外的全部报错
       if (msg) {
-        showNotification(msg);
         clearInfoToLogin();
+        showNotification(msg);
         throw Error(msg);
       } else {
         if (status == "404") {

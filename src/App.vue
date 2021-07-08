@@ -1,5 +1,10 @@
 <template>
-  <n-config-provider :theme="theme" :locale="locale" :date-locale="dateLocale">
+  <n-config-provider
+    :theme="theme"
+    :locale="locale"
+    :date-locale="dateLocale"
+    :theme-overrides="themeOverrides"
+  >
     <n-dialog-provider>
       <n-notification-provider>
         <n-message-provider>
@@ -23,6 +28,10 @@ import {
 } from "naive-ui";
 import { useAppStore } from "./store/modules/app";
 import Slot from "/@/views/layouts/Slot.vue";
+/**
+ * @type import('naive-ui').GlobalThemeOverrides
+ */
+const themeOverrides = {};
 export default defineComponent({
   components: {
     NConfigProvider,
@@ -40,7 +49,8 @@ export default defineComponent({
     return {
       theme,
       locale: zhCN,
-      dateLocale: dateZhCN
+      dateLocale: dateZhCN,
+      themeOverrides
     };
   }
 });

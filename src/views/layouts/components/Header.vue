@@ -27,9 +27,9 @@ import {
   NAvatar,
   NSpace
 } from "naive-ui";
-import { router } from "/@/router";
 import DarkModeToggle from "/@/components/common/DarkModeToggle.vue";
 import { useUserStore } from "/@/store/modules/user";
+import { useImpRoute } from "/@/hooks/useRoute";
 export default {
   name: "DashboardHeader",
   components: {
@@ -44,13 +44,14 @@ export default {
   setup() {
     // use
     const userStore = useUserStore();
+    const { pushPath } = useImpRoute();
     // computed
     const userInfo = computed(() => {
       return userStore.getUserInfo;
     });
     // method
     const handleLogoClick = () => {
-      router.push("/");
+      pushPath("/");
     };
     const handleLogout = () => {
       const d = window.$dialog.warning({
@@ -73,10 +74,10 @@ export default {
           handleLogout();
           break;
         case "dashboard":
-          router.push("/");
+          pushPath("/");
           break;
         case "center":
-          router.push("/");
+          pushPath("/center/my");
           break;
         default:
           break;
