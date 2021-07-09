@@ -6,6 +6,7 @@ import { useUserStore } from "/@/store/modules/user";
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     const userToken = getUserToken();
+    // debugger;
     if (userToken?.access_token) {
       // 0 进入获取用户基本信息 1 以上就跳过进入正常页面
       const userStore = useUserStore();

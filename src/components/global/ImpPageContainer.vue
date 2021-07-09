@@ -1,6 +1,6 @@
 <template>
   <n-card>
-    <n-page-header :title="title" @back="goBack">
+    <n-page-header :title="pageTitle" @back="goBack">
       <template #avatar>
         <slot name="avatar"></slot>
       </template>
@@ -21,6 +21,10 @@ export default defineComponent({
     isBack: {
       type: Boolean,
       default: false
+    },
+    title: {
+      type: String,
+      default: ""
     }
   },
   components: {
@@ -30,12 +34,12 @@ export default defineComponent({
   setup(props) {
     const { goBack, crtMeta } = useImpRoute();
     // computed
-    const title = computed(() => {
-      return crtMeta.value.title;
+    const pageTitle = computed(() => {
+      return props.title || crtMeta.value.title;
     });
     return {
       // computed
-      title,
+      pageTitle,
       // method
       goBack: props.isBack ? goBack : undefined
     };

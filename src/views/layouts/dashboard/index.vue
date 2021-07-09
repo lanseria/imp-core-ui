@@ -27,7 +27,9 @@
       position="static"
       content-style="min-height: calc(100vh - var(--header-height)); display: flex; flex-direction: column;"
     >
-      <router-view />
+      <div class="content">
+        <router-view />
+      </div>
     </n-layout>
   </n-layout>
 </template>
@@ -69,7 +71,7 @@ export default defineComponent({
       const menuMap: MenuComponentTreeMap = userStore.menuComponentTreeMap;
       if (menuMap.has(activeMenuGroup.value)) {
         const menus = menuMap.get(activeMenuGroup.value);
-        return menus! as unknown as MenuGroupOption[];
+        return menus as unknown as MenuGroupOption[];
       }
       return [];
     });
@@ -91,3 +93,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="css">
+.content {
+  padding: 20px;
+}
+</style>

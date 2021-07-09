@@ -7,7 +7,12 @@
     <div></div>
     <div class="nav-end">
       <dark-mode-toggle class="nav-picker"></dark-mode-toggle>
-      <n-dropdown @select="handleSelect" trigger="click" :options="options">
+      <n-dropdown
+        @select="handleSelect"
+        trigger="click"
+        placement="bottom-end"
+        :options="options"
+      >
         <n-space align="center" style="height: 42px">
           <n-avatar :src="userInfo?.avatar" />
           <n-button text :keyboard="false">{{ userInfo?.realName }}</n-button>

@@ -82,6 +82,7 @@ request.interceptors.response.use(
     function getErrorCode(name: string, msg = ""): string {
       return errorCode[name as ErrorCodeKey] || msg;
     }
+    // debugger;
     if (/4\d\d/.test(status)) {
       const msg = getErrorCode(status);
       // 除了验证400以外的全部报错

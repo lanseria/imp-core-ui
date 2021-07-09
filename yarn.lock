@@ -1164,9 +1164,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@^26.0.20":
-  version "26.0.23"
-  resolved "https://registry.nlark.com/@types/jest/download/@types/jest-26.0.23.tgz#a1b7eab3c503b80451d019efb588ec63522ee4e7"
-  integrity sha1-obfqs8UDuARR0BnvtYjsY1Iu5Oc=
+  version "26.0.24"
+  resolved "https://registry.nlark.com/@types/jest/download/@types/jest-26.0.24.tgz#943d11976b16739185913a1936e0de0c4a7d595a"
+  integrity sha1-lD0Rl2sWc5GFkToZNuDeDEp9WVo=
   dependencies:
     jest-diff "^26.0.0"
     pretty-format "^26.0.0"
@@ -1188,29 +1188,24 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*", "@types/lodash@^4.14.170":
-  version "4.14.170"
-  resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.170.tgz#0d67711d4bf7f4ca5147e9091b847479b87925d6"
-  integrity sha1-DWdxHUv39MpRR+kJG4R0ebh5JdY=
-
-"@types/lodash@^4.14.168":
+"@types/lodash@*", "@types/lodash@^4.14.168", "@types/lodash@^4.14.170":
   version "4.14.171"
   resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.171.tgz#f01b3a5fe3499e34b622c362a46a609fdb23573b"
   integrity sha1-8Bs6X+NJnjS2IsNipGpgn9sjVzs=
 
 "@types/node@*":
-  version "16.0.0"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.0.0.tgz#067a6c49dc7a5c2412a505628e26902ae967bf6f"
-  integrity sha1-BnpsSdx6XCQSpQVijiaQKulnv28=
+  version "16.0.3"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.0.3.tgz?cache=0&sync_timestamp=1625789438038&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.0.3.tgz#f99794f182a9ffeaf6a0b589e3d3dc652a623ad5"
+  integrity sha1-+ZeU8YKp/+r2oLWJ49PcZSpiOtU=
 
 "@types/node@^14.14.10":
-  version "14.17.4"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.17.4.tgz#218712242446fc868d0e007af29a4408c7765bc0"
-  integrity sha1-IYcSJCRG/IaNDgB68ppECMd2W8A=
+  version "14.17.5"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.17.5.tgz?cache=0&sync_timestamp=1625789438038&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.17.5.tgz#b59daf6a7ffa461b5648456ca59050ba8e40ed54"
+  integrity sha1-tZ2van/6RhtWSEVspZBQuo5A7VQ=
 
 "@types/node@~14.14.31":
   version "14.14.45"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.14.45.tgz#ec2dfb5566ff814d061aef7e141575aedba245cf"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.14.45.tgz?cache=0&sync_timestamp=1625789438038&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.45.tgz#ec2dfb5566ff814d061aef7e141575aedba245cf"
   integrity sha1-7C37VWb/gU0GGu9+FBV1rtuiRc8=
 
 "@types/qs@^6.9.5":
@@ -2034,7 +2029,7 @@ electron-to-chromium@^1.3.723:
 
 emoji-regex@^8.0.0:
   version "8.0.0"
-  resolved "https://registry.npm.taobao.org/emoji-regex/download/emoji-regex-8.0.0.tgz?cache=0&sync_timestamp=1614682707048&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Femoji-regex%2Fdownload%2Femoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
+  resolved "https://registry.nlark.com/emoji-regex/download/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha1-6Bj9ac5cz8tARZT4QpY79TFkzDc=
 
 emojis-list@^3.0.0:
@@ -2645,7 +2640,7 @@ is-extglob@^2.1.1:
 
 is-fullwidth-code-point@^3.0.0:
   version "3.0.0"
-  resolved "https://registry.npm.taobao.org/is-fullwidth-code-point/download/is-fullwidth-code-point-3.0.0.tgz#f116f8064fe90b3f7844a38997c0b75051269f1d"
+  resolved "https://registry.nlark.com/is-fullwidth-code-point/download/is-fullwidth-code-point-3.0.0.tgz#f116f8064fe90b3f7844a38997c0b75051269f1d"
   integrity sha1-8Rb4Bk/pCz94RKOJl8C3UFEmnx0=
 
 is-glob@^4.0.0, is-glob@^4.0.1:
@@ -2944,9 +2939,9 @@ ms@2.1.2:
   integrity sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=
 
 naive-ui@^2.12.0:
-  version "2.15.3"
-  resolved "https://registry.nlark.com/naive-ui/download/naive-ui-2.15.3.tgz#7f5cca6d9da716e8c78bb3069f1d3796347867c8"
-  integrity sha1-f1zKbZ2nFujHi7MGnx03ljR4Z8g=
+  version "2.15.4"
+  resolved "https://registry.nlark.com/naive-ui/download/naive-ui-2.15.4.tgz#56c53b03e277ac9e55396bfb85dc2b49293ca6c3"
+  integrity sha1-VsU7A+J3rJ5VOWv7hdwrSSk8psM=
   dependencies:
     "@css-render/plugin-bem" "^0.15.4"
     "@css-render/vue3-ssr" "^0.15.4"
@@ -3236,7 +3231,7 @@ randombytes@^2.1.0:
 
 react-is@^17.0.1:
   version "17.0.2"
-  resolved "https://registry.nlark.com/react-is/download/react-is-17.0.2.tgz?cache=0&sync_timestamp=1625242714499&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact-is%2Fdownload%2Freact-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
+  resolved "https://registry.nlark.com/react-is/download/react-is-17.0.2.tgz?cache=0&sync_timestamp=1625761637477&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact-is%2Fdownload%2Freact-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha1-5pHUqOnHiTZWVVOas3J2Kw77VPA=
 
 readable-stream@^2.0.2, readable-stream@~2.3.6:
@@ -3378,9 +3373,9 @@ rollup-plugin-terser@^7.0.0:
     terser "^5.0.0"
 
 rollup-plugin-visualizer@^5.5.0:
-  version "5.5.1"
-  resolved "https://registry.nlark.com/rollup-plugin-visualizer/download/rollup-plugin-visualizer-5.5.1.tgz#cba4eac48a2e3237cd172413d33976be64e54abe"
-  integrity sha1-y6TqxIouMjfNFyQT0zl2vmTlSr4=
+  version "5.5.2"
+  resolved "https://registry.nlark.com/rollup-plugin-visualizer/download/rollup-plugin-visualizer-5.5.2.tgz#ae2130ee5ae4a2d901e764e492b71357cb95eed7"
+  integrity sha1-riEw7lrkotkB52TkkrcTV8uV7tc=
   dependencies:
     nanoid "^3.1.22"
     open "^7.4.2"
@@ -3573,7 +3568,7 @@ string-hash@^1.1.1:
 
 string-width@^4.1.0, string-width@^4.2.0:
   version "4.2.2"
-  resolved "https://registry.npm.taobao.org/string-width/download/string-width-4.2.2.tgz?cache=0&sync_timestamp=1618558823901&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fstring-width%2Fdownload%2Fstring-width-4.2.2.tgz#dafd4f9559a7585cfba529c6a0a4f73488ebd4c5"
+  resolved "https://registry.nlark.com/string-width/download/string-width-4.2.2.tgz#dafd4f9559a7585cfba529c6a0a4f73488ebd4c5"
   integrity sha1-2v1PlVmnWFz7pSnGoKT3NIjr1MU=
   dependencies:
     emoji-regex "^8.0.0"
@@ -3598,7 +3593,7 @@ stringify-object@^3.3.0:
 
 strip-ansi@^6.0.0:
   version "6.0.0"
-  resolved "https://registry.npm.taobao.org/strip-ansi/download/strip-ansi-6.0.0.tgz?cache=0&sync_timestamp=1618553320591&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fstrip-ansi%2Fdownload%2Fstrip-ansi-6.0.0.tgz#0b1571dd7669ccd4f3e06e14ef1eed26225ae532"
+  resolved "https://registry.nlark.com/strip-ansi/download/strip-ansi-6.0.0.tgz#0b1571dd7669ccd4f3e06e14ef1eed26225ae532"
   integrity sha1-CxVx3XZpzNTz4G4U7x7tJiJa5TI=
   dependencies:
     ansi-regex "^5.0.0"
