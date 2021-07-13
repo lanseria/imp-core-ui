@@ -24,19 +24,19 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       ]
     },
     build: {
-      target: "esnext",
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          // Used to delete console in production environment
-          // 用于删除生产环境中的控制台
-          drop_console: true
-        }
-      },
+      target: "esnext"
+      // terserOptions: {
+      //   compress: {
+      //     keep_infinity: true,
+      //     // Used to delete console in production environment
+      //     // 用于删除生产环境中的控制台
+      //     drop_console: true
+      //   }
+      // },
       // Turning off brotliSize display can slightly reduce packaging time
       // 关掉BrotliSize显示可以稍微减少包装时间
-      brotliSize: false,
-      chunkSizeWarningLimit: 2000
+      // brotliSize: false,
+      // chunkSizeWarningLimit: 2000
     },
     // css: {
     //   preprocessorOptions: {

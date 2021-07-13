@@ -37,11 +37,15 @@ request.interceptors.response.use(
   res => {
     const userStore = useUserStore();
     const showNotification = (msg: string) => {
-      window.$notification.warning({
-        content: "提醒",
-        meta: msg,
-        duration: 2000
-      });
+      try {
+        window.$notification.warning({
+          content: "提醒",
+          meta: msg,
+          duration: 2000
+        });
+      } catch (err) {
+        console.warn(msg, err);
+      }
     };
     const clearInfoToLogin = () => {
       userStore.logout(router.currentRoute.value.fullPath);

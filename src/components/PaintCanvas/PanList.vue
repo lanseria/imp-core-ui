@@ -82,7 +82,7 @@ export default defineComponent({
       return DEFAULT_COLOR !== activeColor.value;
     });
     // method
-    const handleActive = (item: any) => {
+    const handleActive = (item: IObj) => {
       activePan.value = item.id;
       if (item.id === 4) {
         activeColor.value = "#00000000";

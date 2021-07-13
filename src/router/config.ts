@@ -1,7 +1,10 @@
 import type { Dictionary } from "lodash";
 
 export const requestTimeout = 30000;
-export const requestBaseURL = "/api";
+export const requestBaseURL =
+  (import.meta.env.VITE_USE_MOCK as unknown as string) === "true"
+    ? "/basic-api"
+    : "/api";
 
 export const noAuthMeta = {
   keepAlive: false,

@@ -16,7 +16,9 @@
   "homepage": "https://github.com/Lanseria/imp-core-ui#readme",
   "scripts": {
     "dev": "vite",
+    "dev:mock": "vite --mode mock",
     "build": "vite build && esno ./build/script/postBuild.ts",
+    "build:mock": "vite build --mode mock && esno ./build/script/postBuild.ts ",
     "serve": "vite preview",
     "lint:prettier": "prettier --write \"src/**/*.{ts,js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:all": "prettier --write \"*.{ts,js,json,tsx,css,less,scss,vue,html,md}\"",
@@ -34,6 +36,7 @@
     "echarts": "^5.1.1",
     "jodit": "^3.6.6",
     "lodash-es": "^4.17.21",
+    "mockjs": "^1.1.0",
     "naive-ui": "^2.12.0",
     "nzh": "^1.0.4",
     "pinia": "2.0.0-beta.3",
@@ -78,6 +81,7 @@
     "typescript": "~4.1.5",
     "vite": "^2.1.5",
     "vite-plugin-html": "^2.0.6",
+    "vite-plugin-mock": "^2.9.1",
     "vite-plugin-pwa": "^0.7.2",
     "vue-tsc": "^0.0.24"
   }
