@@ -9,7 +9,7 @@ function pathResolve(dir: string) {
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
-  const isBuild = command === "build";
+  console.log(mode);
   return {
     // /
     base: env.VITE_PUBLIC_PATH,
@@ -64,7 +64,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         overlay: true
       }
     },
-    plugins: createVitePlugins(env, isBuild),
+    plugins: createVitePlugins(env, command, mode),
     optimizeDeps: {
       include: ["dayjs/plugin/advancedFormat"],
       exclude: ["vue-demi"]

@@ -16,9 +16,9 @@
   "homepage": "https://github.com/Lanseria/imp-core-ui#readme",
   "scripts": {
     "dev": "vite",
-    "dev:mock": "vite --mode mock",
+    "dev:mock": "vite --mode devmock",
     "build": "vite build && esno ./build/script/postBuild.ts",
-    "build:mock": "vite build --mode mock && esno ./build/script/postBuild.ts ",
+    "build:mock": "vite build --mode prodmock && esno ./build/script/postBuild.ts ",
     "serve": "vite preview",
     "lint:prettier": "prettier --write \"src/**/*.{ts,js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:all": "prettier --write \"*.{ts,js,json,tsx,css,less,scss,vue,html,md}\"",
