@@ -49,9 +49,8 @@ import { adminUserPageReq } from "/@/api/Admin/User";
 import FormModal from "./FormModal.vue";
 class PaginationDTO {
   page = 1;
-  itemCount?: number = undefined;
   pageSize = 10;
-  pageSizes = [10, 20, 30];
+  pageCount = 1;
   showSizePicker = true;
 }
 export default defineComponent({
@@ -88,10 +87,8 @@ export default defineComponent({
         } else {
           pagedTable.value = data.records;
           pagination.value.page = +data.current;
-          pagination.value.pageSize = +data.size;
-          pagination.value.itemCount = +data.total;
+          pagination.value.pageCount = +data.pages;
         }
-        console.log(code, msg, data);
         loading.value = false;
       }
     };
