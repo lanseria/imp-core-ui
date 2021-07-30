@@ -71,13 +71,15 @@ export default defineComponent({
     };
     return {
       // const
-      options: myRoute.map(m => {
-        return {
-          label: m.meta.title,
-          key: m.name,
-          icon: renderIcon(m.meta.icon as string)
-        };
-      }),
+      options: myRoute
+        .filter(m => !m.meta.hidden)
+        .map(m => {
+          return {
+            label: m.meta.title,
+            key: m.name,
+            icon: renderIcon(m.meta.icon as string)
+          };
+        }),
       // ref
       activeKey,
       // method

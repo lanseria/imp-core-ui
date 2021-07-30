@@ -9,6 +9,7 @@
           :headers="{
             Authorization: headers
           }"
+          @finish="handleFinish"
         >
           <n-button>上传文件</n-button>
         </n-upload>
@@ -55,6 +56,9 @@ export default defineComponent({
     const handleSave = () => {
       UploadRef.value.submit();
     };
+    const handleFinish = () => {
+      close();
+    };
     return {
       // refs
       ImpModalRef,
@@ -64,7 +68,8 @@ export default defineComponent({
       // method
       open,
       close,
-      handleSave
+      handleSave,
+      handleFinish
     };
   }
 });

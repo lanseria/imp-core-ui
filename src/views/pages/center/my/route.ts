@@ -49,5 +49,14 @@ export const myRoute: AppRouteRecordRaw[] = [
       icon: "icon-guanlian"
     }),
     component: () => import("./pdf-demo/index.vue")
+  },
+  {
+    path: "pdf-detail/:id",
+    name: "PdfDetail",
+    meta: authMetaFunc("会议批注详情(PDF)", {
+      icon: "icon-guanlian",
+      hidden: true
+    }),
+    component: () => import("./pdf-demo/Detail.vue")
   }
 ];
