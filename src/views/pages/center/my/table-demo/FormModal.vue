@@ -30,6 +30,7 @@ class UserFormDTO extends CommonDTO {
   phone = "";
 }
 export default defineComponent({
+  emits: ["load-page"],
   components: {
     NForm,
     NFormItem,
@@ -37,7 +38,7 @@ export default defineComponent({
     NSpace,
     NButton
   },
-  setup() {
+  setup(props, { emit }) {
     // refs
     const ImpModalRef = ref();
     // ref
@@ -52,6 +53,7 @@ export default defineComponent({
     const close = () => {
       modelRef.value = new UserFormDTO();
       ImpModalRef.value.showModal = false;
+      emit("load-page");
     };
     return {
       // refs

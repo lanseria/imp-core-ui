@@ -2,9 +2,7 @@
   <imp-page-container>
     <div class="data-table-header">
       <n-space>
-        <n-button type="primary" @click="handleAdd()">新增</n-button>
-        <n-button>导出</n-button>
-        <n-button>删除</n-button>
+        <n-button type="primary" @click="handleAdd()">上传文件</n-button>
       </n-space>
       <n-space>
         <n-input-group>
@@ -19,34 +17,15 @@
         </n-input-group>
       </n-space>
     </div>
-    <n-data-table
-      remote
-      :loading="loading"
-      :columns="columns"
-      :data="pagedTable"
-      :pagination="pagination"
-      :row-key="row => row.userId"
-      @update:page="handlePageChange"
-      @update:page-size="handlePageSizeChange"
-    />
   </imp-page-container>
-  <form-modal ref="FormModalRef" @load-page="loadPage()"></form-modal>
+  <upload-modal ref="UploadModalRef" @load-page="loadPage()"></upload-modal>
 </template>
 <script lang="ts">
-import {
-  NDataTable,
-  NButton,
-  NSpace,
-  NInputGroup,
-  NInput,
-  NIcon
-} from "naive-ui";
-import { TableColumn } from "naive-ui/lib/data-table/src/interface";
-import { defineComponent, onMounted, ref } from "vue";
-import { operateColums, OptList } from "./Actions";
+import { NButton, NSpace, NInputGroup, NInput, NIcon } from "naive-ui";
 import { SearchOutline as SearchOutlineIcon } from "@vicons/ionicons5";
-import { adminUserPageReq } from "/@/api/Admin/User";
-import FormModal from "./FormModal.vue";
+import { defineComponent, onMounted, ref } from "vue";
+import { adminPdfPageReq } from "/@/api/Admin/Pdf";
+import UploadModal from "./UploadModal.vue";
 class PaginationDTO {
   page = 1;
   pageSize = 10;
@@ -55,23 +34,22 @@ class PaginationDTO {
 }
 export default defineComponent({
   components: {
-    NDataTable,
-    NSpace,
     NButton,
+    NSpace,
     NInputGroup,
     NInput,
     NIcon,
     SearchOutlineIcon,
-    FormModal
+    UploadModal
   },
   setup() {
-    // refs
-    const FormModalRef = ref();
     // ref
     const loading = ref(false);
     const searchName = ref("");
-    const pagedTable = ref<AdminUserPageItemVO[]>([]);
+    const pagedTable = ref<IObj[]>([]);
     const pagination = ref(new PaginationDTO());
+    // refs
+    const UploadModalRef = ref();
     // method
     const loadPage = async (
       params: IObj = {
@@ -81,7 +59,7 @@ export default defineComponent({
     ) => {
       if (!loading.value) {
         loading.value = true;
-        const { code, msg, data } = await adminUserPageReq(params);
+        const { code, msg, data } = await adminPdfPageReq(params);
         if (code) {
           window.$message.warning(msg);
         } else {
@@ -91,6 +69,9 @@ export default defineComponent({
         }
         loading.value = false;
       }
+    };
+    const handleAdd = () => {
+      UploadModalRef.value.open();
     };
     const handleSearch = () => {
       loadPage({
@@ -111,57 +92,18 @@ export default defineComponent({
         size: currentPageSize
       });
     };
-    const handleAdd = () => {
-      FormModalRef.value.open();
-    };
-    const handleEdit = (row: IObj) => {
-      FormModalRef.value.open(row);
-    };
-    const handleDel = (row: IObj) => {
-      console.log(row);
-    };
 
     onMounted(() => {
       loadPage();
     });
-
-    const operateOptions: OptList[] = [
-      {
-        name: "编辑",
-        func: handleEdit
-      },
-      {
-        name: "删除",
-        func: handleDel
-      }
-    ];
-    const columns: TableColumn[] = [
-      {
-        type: "selection"
-      },
-      {
-        title: "用户名",
-        key: "username"
-      },
-      {
-        title: "真实姓名",
-        key: "realName"
-      },
-      {
-        title: "手机",
-        key: "phone"
-      },
-      operateColums(operateOptions)
-    ];
     return {
-      // refs
-      FormModalRef,
       // ref
       searchName,
-      loading,
-      columns,
       pagedTable,
+      loading,
       pagination,
+      // refs
+      UploadModalRef,
       // method
       loadPage,
       handleAdd,
@@ -172,6 +114,7 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="css" scoped>
 .data-table-header {
   display: flex;
