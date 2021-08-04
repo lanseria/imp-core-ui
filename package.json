@@ -27,6 +27,7 @@
     "upi": "yarn upgrade-interactive"
   },
   "dependencies": {
+    "@lanseria/vue-pdf-vite": "^1.0.2",
     "@vicons/ionicons5": "^0.10.0",
     "@vueuse/core": "^4.1.0",
     "axios": "^0.21.1",

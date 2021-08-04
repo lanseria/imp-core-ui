@@ -53,6 +53,7 @@ export const myRoute: AppRouteRecordRaw[] = [
   {
     path: "pdf-detail/:id",
     name: "PdfDetail",
+    props: true,
     meta: authMetaFunc("会议批注详情(PDF)", {
       icon: "icon-guanlian",
       hidden: true

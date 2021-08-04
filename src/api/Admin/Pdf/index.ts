@@ -8,3 +8,18 @@ export const adminPdfPageReq = (params: Partial<PageParam>) => {
     params
   });
 };
+
+export const adminPdfDetailByIdReq = (id: number) => {
+  return r.request<R<any>>({
+    url: `${api.pdfDetail}/${id}`,
+    method: "GET"
+  });
+};
+
+export const adminPdfContentByIdReq = (params: any) => {
+  return r.request<R<any>>({
+    url: `${api.pdfContent}`,
+    method: "GET",
+    params
+  });
+};
