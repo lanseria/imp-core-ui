@@ -1,6 +1,6 @@
 <template>
   <imp-page-container :title="modelRef.name">
-    <pdf-editor v-if="loadding" :src="modelRef.previewUrl"></pdf-editor>
+    <PdfAnnotate v-if="loadding" :src="modelRef.previewUrl"></PdfAnnotate>
   </imp-page-container>
 </template>
 <script lang="ts">
@@ -9,8 +9,7 @@ import {
   adminPdfContentByIdReq,
   adminPdfDetailByIdReq
 } from "/@/api/Admin/Pdf";
-import { PdfEditor } from "@lanseria/vue-pdf-vite";
-import "@lanseria/vue-pdf-vite/style.css";
+import PdfAnnotate from "/@/components/common/PdfAnnotate.vue";
 class PdfPageDTO {
   cover = "";
   createTime = "";
@@ -27,7 +26,7 @@ class PdfPageDTO {
 export default defineComponent({
   props: ["id"],
   components: {
-    PdfEditor
+    PdfAnnotate
   },
   setup(props) {
     const modelRef = ref(new PdfPageDTO());

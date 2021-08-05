@@ -27,7 +27,6 @@
     "upi": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@lanseria/vue-pdf-vite": "^1.0.2",
     "@vicons/ionicons5": "^0.10.0",
     "@vueuse/core": "^4.1.0",
     "axios": "^0.21.1",
@@ -40,6 +39,7 @@
     "mockjs": "^1.1.0",
     "naive-ui": "^2.12.0",
     "nzh": "^1.0.4",
+    "pdfjs-dist": "^2.9.359",
     "pinia": "2.0.0-beta.3",
     "qs": "^6.9.6",
     "register-service-worker": "^1.7.1",
