@@ -23,3 +23,19 @@ export const adminPdfContentByIdReq = (params: any) => {
     params
   });
 };
+
+export const adminPdfAnnotateByIdReq = (params: any) => {
+  return r.request<R<any>>({
+    url: `${api.pdfAnnotate}`,
+    method: "GET",
+    params
+  });
+};
+
+export const adminPdfAnnotateCreateReq = (data: any) => {
+  return r.request<R<boolean>>({
+    url: `${api.uploadAnnotation}`,
+    method: "POST",
+    data
+  });
+};

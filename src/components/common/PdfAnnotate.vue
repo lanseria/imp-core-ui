@@ -1,5 +1,5 @@
 <template>
-  <div class="pdf-annotate">
+  <div class="pdf-annotate" ref="PdfAnnotateRef">
     <div class="header-tab">
       <div class="header-box">
         <div class="tabs">
@@ -22,34 +22,77 @@
         </div>
         <div class="viewer-tools">
           <n-button-group>
-            <n-button ghost> 缩放 </n-button>
-            <n-button ghost> 关闭 </n-button>
+            <n-button ghost @click="fullscreen()"> 全屏 </n-button>
+            <n-button ghost @click="goBack()"> 关闭 </n-button>
           </n-button-group>
         </div>
       </div>
 
       <div v-if="isAnnotate" class="tools-box">
         <n-button-group>
-          <n-button ghost> 铅笔 </n-button>
-          <n-button ghost> 画笔 </n-button>
+          <n-button
+            ghost
+            :type="editState === 'Text' ? 'primary' : 'default'"
+            @click="editState = 'Text'"
+          >
+            文字
+          </n-button>
+          <n-button
+            ghost
+            :type="editState === 'Paint' ? 'primary' : 'default'"
+            @click="editState = 'Paint'"
+          >
+            画笔
+          </n-button>
           <n-button ghost> 记号笔 </n-button>
           <n-button ghost> 颜色 </n-button>
+          <n-button ghost @click="handleSave()"> 保存 </n-button>
         </n-button-group>
       </div>
     </div>
     <div class="viewer-wrap">
-      <div class="viewer-box">
-        <div class="render-content" ref="RenderContentRef">
-          <slot name="canvas"></slot>
-          <canvas ref="CanvasRef"></canvas>
-        </div>
-      </div>
-      <div class="annotate-box"></div>
+      <n-layout has-sider>
+        <n-layout-sider
+          v-if="isAnnotate"
+          :native-scrollbar="false"
+          :collapsed-width="0"
+          collapse-mode="transform"
+          bordered
+          show-trigger="bar"
+        >
+          <div>我的批注</div>
+        </n-layout-sider>
+        <n-layout-content>
+          <div class="render-content" ref="RenderContentRef">
+            <template v-if="isAnnotate">
+              <Paint
+                ref="PaintRef"
+                :width="CanvasRef.width"
+                :height="CanvasRef.height"
+                :enabled="editState === 'Paint'"
+              ></Paint>
+              <Text
+                ref="TextRef"
+                :width="CanvasRef.width"
+                :height="CanvasRef.height"
+                :enabled="editState === 'Text'"
+              ></Text>
+            </template>
+            <canvas ref="CanvasRef" class="pdf-canvas"></canvas>
+          </div>
+        </n-layout-content>
+      </n-layout>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { NButton, NButtonGroup } from "naive-ui";
+import {
+  NButton,
+  NButtonGroup,
+  NLayout,
+  NLayoutSider,
+  NLayoutContent
+} from "naive-ui";
 import { defineComponent, ref, onMounted, reactive, toRefs } from "vue";
 import * as pdfjsLib from "pdfjs-dist";
 import {
@@ -57,8 +100,13 @@ import {
   PDFPageProxy,
   TypedArray
 } from "pdfjs-dist/types/display/api";
+import Paint from "../utils/Paint.vue";
+import Text from "../utils/Text.vue";
+import { useImpRoute } from "/@/hooks/useRoute";
+import { postFileUploadAvatarReq } from "/@/api/Admin/File";
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://unpkg.zhimg.com/pdfjs-dist@2.9.359/build/pdf.worker.min.js";
+type EditState = null | "Paint" | "Text";
 export default defineComponent({
   props: {
     src: {
@@ -66,19 +114,30 @@ export default defineComponent({
       default: ""
     }
   },
-  emits: ["update-state"],
+  emits: ["update-state", "get-annotate", "create-annotate"],
   components: {
     NButton,
-    NButtonGroup
+    NButtonGroup,
+    NLayout,
+    NLayoutSider,
+    NLayoutContent,
+
+    Paint,
+    Text
   },
   setup(props, { emit }) {
+    const { goBack } = useImpRoute();
     const state = reactive({
       CanvasRef: {} as HTMLCanvasElement,
+      PaintRef: {} as any,
+      TextRef: {} as any,
       RenderContentRef: {} as HTMLElement,
+      PdfAnnotateRef: {} as HTMLElement,
       loading: false,
       isAnnotate: false,
       current: 1,
       total: 0,
+      editState: null as EditState,
       pdfDoc: {} as PDFDocumentProxy,
       pdfPage: {} as PDFPageProxy,
       info: {
@@ -88,6 +147,52 @@ export default defineComponent({
         keywords: ""
       }
     });
+    // method
+    /**
+     * @description: 检测有没有元素处于全屏状态
+     * @return 布尔值
+     */
+    const isElementFullScreen = () => {
+      const fullscreenElement = document.fullscreenElement;
+      if (fullscreenElement === null) {
+        return false; // 当前没有元素在全屏状态
+      } else {
+        return true; // 有元素在全屏状态
+      }
+    };
+    const fullscreen = () => {
+      if (isElementFullScreen()) {
+        document.exitFullscreen();
+      } else {
+        state.PdfAnnotateRef.requestFullscreen();
+      }
+    };
+    const handleSave = () => {
+      const paintContext = state.PaintRef.$el.getContext("2d");
+      const textCanvas = state.TextRef.drawTextBoxAndSave();
+      paintContext?.drawImage(
+        textCanvas,
+        state.CanvasRef.width,
+        state.CanvasRef.height
+      );
+      state.PaintRef.$el.toBlob(async (blob: Blob) => {
+        const formData = new FormData();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        formData.append("file", blob, "1.png");
+        // const img = window.URL.createObjectURL(blob);
+        // console.log(img);
+        const { code, msg, data } = await postFileUploadAvatarReq(formData);
+        if (code) {
+          window.$message.success(msg);
+        } else {
+          console.log(data);
+          emit("create-annotate", {
+            content: data.url,
+            pageNumber: state.current
+          });
+        }
+      });
+    };
     const getBufferArray = async (src: string) => {
       return (await fetch(src).then(res => res.arrayBuffer())) as TypedArray;
     };
@@ -142,12 +247,16 @@ export default defineComponent({
     const getPdfDoc = async () => {
       if (props.src) {
         await refreshPdfDoc(await getBufferArray(props.src));
+        emit("get-annotate", state.current);
       }
     };
     onMounted(() => {
       getPdfDoc();
     });
     return {
+      goBack,
+      fullscreen,
+      handleSave,
       ...toRefs(state)
     };
   }
@@ -161,7 +270,12 @@ export default defineComponent({
 }
 .header-tab {
   display: flex;
+  flex: 0 1 0;
   flex-direction: column;
+}
+.viewer-wrap {
+  flex: 1 0 0;
+  display: flex;
 }
 .header-box {
   display: flex;
@@ -175,5 +289,19 @@ export default defineComponent({
 }
 .tools-box {
   display: flex;
+}
+.viewer-box {
+  position: relative;
+}
+.render-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.render-content .pdf-canvas {
+  /* box-shadow: 0px 0px 15px 5px #cfcfcf; */
+  box-shadow: var(--box-shadow);
 }
 </style>

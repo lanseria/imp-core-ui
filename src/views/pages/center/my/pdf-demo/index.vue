@@ -61,7 +61,8 @@ import {
   NCard,
   NTime,
   NEllipsis,
-  NBadge
+  NBadge,
+  NSkeleton
 } from "naive-ui";
 import { SearchOutline as SearchOutlineIcon } from "@vicons/ionicons5";
 import { defineComponent, onMounted, ref } from "vue";
@@ -85,6 +86,8 @@ export default defineComponent({
     NTime,
     NEllipsis,
     NBadge,
+    NSkeleton,
+
     SearchOutlineIcon,
     UploadModal
   },
