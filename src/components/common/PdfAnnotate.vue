@@ -21,6 +21,12 @@
           </n-button-group>
         </div>
         <div class="viewer-tools">
+          <n-pagination
+            :page="current"
+            :page-count="total"
+            :page-slot="7"
+            @update:page="handlePage"
+          />
           <n-button-group>
             <n-button ghost @click="fullscreen()"> 全屏 </n-button>
             <n-button ghost @click="goBack()"> 关闭 </n-button>
@@ -44,9 +50,8 @@
           >
             画笔
           </n-button>
-          <n-button ghost> 记号笔 </n-button>
           <n-button ghost> 颜色 </n-button>
-          <n-button ghost @click="handleSave()"> 保存 </n-button>
+          <n-button type="primary" @click="handleSave()"> 保存 </n-button>
         </n-button-group>
       </div>
     </div>
@@ -60,7 +65,21 @@
           bordered
           show-trigger="bar"
         >
-          <div>我的批注</div>
+          <n-h6>我的批注</n-h6>
+          <n-list bordered>
+            <n-list-item v-for="item in annotateList" :key="item.relationId">
+              <template #prefix>
+                <img width="40" :src="item.content" />
+              </template>
+              <template #suffix>
+                <n-time
+                  :time="new Date(item.createTime)"
+                  format="MM-dd hh:mm:ss"
+                />
+              </template>
+              {{ item.remarks }}
+            </n-list-item>
+          </n-list>
         </n-layout-sider>
         <n-layout-content>
           <div class="render-content" ref="RenderContentRef">
@@ -78,6 +97,15 @@
                 :enabled="editState === 'Text'"
               ></Text>
             </template>
+            <img
+              v-for="item in annotateList"
+              :key="item.relationId"
+              style="position: absolute"
+              :width="CanvasRef.width"
+              :height="CanvasRef.height"
+              :src="item.content"
+              :alt="item.remarks"
+            />
             <canvas ref="CanvasRef" class="pdf-canvas"></canvas>
           </div>
         </n-layout-content>
@@ -91,9 +119,21 @@ import {
   NButtonGroup,
   NLayout,
   NLayoutSider,
-  NLayoutContent
+  NLayoutContent,
+  NList,
+  NListItem,
+  NTime,
+  NPagination,
+  NH6
 } from "naive-ui";
-import { defineComponent, ref, onMounted, reactive, toRefs } from "vue";
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  reactive,
+  toRefs,
+  PropType
+} from "vue";
 import * as pdfjsLib from "pdfjs-dist";
 import {
   PDFDocumentProxy,
@@ -112,6 +152,9 @@ export default defineComponent({
     src: {
       type: String,
       default: ""
+    },
+    annotateList: {
+      type: Array as PropType<PdfAnnotateVO[]>
     }
   },
   emits: ["update-state", "get-annotate", "create-annotate"],
@@ -121,6 +164,11 @@ export default defineComponent({
     NLayout,
     NLayoutSider,
     NLayoutContent,
+    NList,
+    NListItem,
+    NTime,
+    NPagination,
+    NH6,
 
     Paint,
     Text
@@ -185,7 +233,6 @@ export default defineComponent({
         if (code) {
           window.$message.success(msg);
         } else {
-          console.log(data);
           emit("create-annotate", {
             content: data.url,
             pageNumber: state.current
@@ -193,6 +240,7 @@ export default defineComponent({
         }
       });
     };
+
     const getBufferArray = async (src: string) => {
       return (await fetch(src).then(res => res.arrayBuffer())) as TypedArray;
     };
@@ -219,7 +267,6 @@ export default defineComponent({
       });
     };
     const getPdfPage = async (crt: number) => {
-      console.log(crt);
       state.loading = true;
       if (!state.pdfDoc) {
         return;
@@ -230,6 +277,11 @@ export default defineComponent({
       state.RenderContentRef.scrollTo({
         top: 0
       });
+    };
+    const handlePage = async (page: number) => {
+      await getPdfPage(page);
+      state.current = page;
+      emit("get-annotate", state.current);
     };
     const refreshPdfDoc = async (buf: TypedArray) => {
       state.pdfDoc = await pdfjsLib.getDocument(buf as TypedArray).promise;
@@ -257,6 +309,7 @@ export default defineComponent({
       goBack,
       fullscreen,
       handleSave,
+      handlePage,
       ...toRefs(state)
     };
   }
@@ -286,6 +339,7 @@ export default defineComponent({
 }
 .viewer-tools {
   display: flex;
+  align-items: center;
 }
 .tools-box {
   display: flex;

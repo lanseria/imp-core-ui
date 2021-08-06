@@ -3,6 +3,7 @@
     <PdfAnnotate
       v-if="loadding"
       :src="modelRef.previewUrl"
+      :annotate-list="annotateList"
       @get-annotate="handleGetAnnotate"
       @create-annotate="handleCreateAnnotate"
     ></PdfAnnotate>
@@ -17,19 +18,7 @@ import {
   adminPdfAnnotateCreateReq
 } from "/@/api/Admin/Pdf";
 import PdfAnnotate from "/@/components/common/PdfAnnotate.vue";
-class PdfPageDTO {
-  cover = "";
-  createTime = "";
-  delFlag = "0";
-  id = 1;
-  isComment = "0";
-  name = "";
-  pageNumber = 1;
-  previewUrl = "";
-  updateTime = "";
-  url = "";
-  userId = 1;
-}
+import { PdfPageDTO } from "/@/types/Admin/Pdf/dto";
 export default defineComponent({
   props: ["id"],
   components: {
@@ -37,6 +26,7 @@ export default defineComponent({
   },
   setup(props) {
     const modelRef = ref(new PdfPageDTO());
+    const annotateList = ref<PdfAnnotateVO[]>([]);
     const loadding = ref(false);
     // computed
     const src = computed(() => {
@@ -49,7 +39,7 @@ export default defineComponent({
         id: modelRef.value.id,
         current
       });
-      console.log(data);
+      annotateList.value = data;
     };
     const handleCreateAnnotate = async (obj: any) => {
       const { data } = await adminPdfAnnotateCreateReq({
@@ -57,7 +47,7 @@ export default defineComponent({
         remarks: "批注1",
         ...obj
       });
-      console.log(data);
+      modelRef.value.pageNumber = obj.pageNumber;
       handleGetAnnotate();
     };
     const loadBuf = async () => {
@@ -81,6 +71,7 @@ export default defineComponent({
     });
     return {
       modelRef,
+      annotateList,
       loadding,
       src,
       handleGetAnnotate,

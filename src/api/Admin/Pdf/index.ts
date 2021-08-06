@@ -25,7 +25,7 @@ export const adminPdfContentByIdReq = (params: any) => {
 };
 
 export const adminPdfAnnotateByIdReq = (params: any) => {
-  return r.request<R<any>>({
+  return r.request<R<PdfAnnotateVO[]>>({
     url: `${api.pdfAnnotate}`,
     method: "GET",
     params
