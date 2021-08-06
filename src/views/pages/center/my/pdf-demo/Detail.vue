@@ -1,15 +1,17 @@
 <template>
-  <imp-page-container :title="modelRef.name">
+  <n-card>
     <PdfAnnotate
       v-if="loadding"
       :src="modelRef.previewUrl"
+      :name="modelRef.name"
       :annotate-list="annotateList"
       @get-annotate="handleGetAnnotate"
       @create-annotate="handleCreateAnnotate"
     ></PdfAnnotate>
-  </imp-page-container>
+  </n-card>
 </template>
 <script lang="ts">
+import { NCard } from "naive-ui";
 import { computed, defineComponent, onMounted, ref } from "vue";
 import {
   adminPdfContentByIdReq,
@@ -17,12 +19,13 @@ import {
   adminPdfAnnotateByIdReq,
   adminPdfAnnotateCreateReq
 } from "/@/api/Admin/Pdf";
-import PdfAnnotate from "/@/components/common/PdfAnnotate.vue";
+import PdfAnnotate from "/@/components/PdfAnnotate/index.vue";
 import { PdfPageDTO } from "/@/types/Admin/Pdf/dto";
 export default defineComponent({
   props: ["id"],
   components: {
-    PdfAnnotate
+    PdfAnnotate,
+    NCard
   },
   setup(props) {
     const modelRef = ref(new PdfPageDTO());

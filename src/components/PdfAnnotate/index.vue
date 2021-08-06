@@ -1,59 +1,21 @@
 <template>
   <div class="pdf-annotate" ref="PdfAnnotateRef">
     <div class="header-tab">
-      <div class="header-box">
-        <div class="tabs">
-          <n-button-group>
-            <n-button
-              :type="!isAnnotate ? 'primary' : 'default'"
-              ghost
-              @click="isAnnotate = false"
-            >
-              阅读模式
-            </n-button>
-            <n-button
-              :type="isAnnotate ? 'primary' : 'default'"
-              ghost
-              @click="isAnnotate = true"
-            >
-              批注模式
-            </n-button>
-          </n-button-group>
-        </div>
-        <div class="viewer-tools">
-          <n-pagination
-            :page="current"
-            :page-count="total"
-            :page-slot="7"
-            @update:page="handlePage"
-          />
-          <n-button-group>
-            <n-button ghost @click="fullscreen()"> 全屏 </n-button>
-            <n-button ghost @click="goBack()"> 关闭 </n-button>
-          </n-button-group>
-        </div>
-      </div>
-
-      <div v-if="isAnnotate" class="tools-box">
-        <n-button-group>
-          <n-button
-            ghost
-            :type="editState === 'Text' ? 'primary' : 'default'"
-            @click="editState = 'Text'"
-          >
-            文字
-          </n-button>
-          <n-button
-            ghost
-            :type="editState === 'Paint' ? 'primary' : 'default'"
-            @click="editState = 'Paint'"
-          >
-            画笔
-          </n-button>
-          <n-button ghost> 颜色 </n-button>
-          <n-button type="primary" @click="handleSave()"> 保存 </n-button>
-        </n-button-group>
-      </div>
+      <HeaderBox
+        :name="name"
+        :current="current"
+        :total="total"
+        :isAnnotate="isAnnotate"
+        @update:isAnnotate="v => (isAnnotate = v)"
+        @on-page="handlePage"
+        @on-fullscreen="fullscreen()"
+      ></HeaderBox>
+      <ToolsBox
+        :isAnnotate="isAnnotate"
+        :editState="editState"
+        @on-save="handleSave()"
+        @update:editState="v => (editState = v)"
+      ></ToolsBox>
     </div>
     <div class="viewer-wrap">
       <n-layout has-sider>
@@ -115,15 +77,12 @@
 </template>
 <script lang="ts">
 import {
-  NButton,
-  NButtonGroup,
   NLayout,
   NLayoutSider,
   NLayoutContent,
   NList,
   NListItem,
   NTime,
-  NPagination,
   NH6
 } from "naive-ui";
 import {
@@ -132,7 +91,8 @@ import {
   onMounted,
   reactive,
   toRefs,
-  PropType
+  PropType,
+  watchEffect
 } from "vue";
 import * as pdfjsLib from "pdfjs-dist";
 import {
@@ -140,16 +100,21 @@ import {
   PDFPageProxy,
   TypedArray
 } from "pdfjs-dist/types/display/api";
-import Paint from "../utils/Paint.vue";
-import Text from "../utils/Text.vue";
-import { useImpRoute } from "/@/hooks/useRoute";
+import HeaderBox from "./HeaderBox.vue";
+import ToolsBox from "./ToolsBox.vue";
+import Paint from "./Paint.vue";
+import Text from "./Text.vue";
 import { postFileUploadAvatarReq } from "/@/api/Admin/File";
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://unpkg.zhimg.com/pdfjs-dist@2.9.359/build/pdf.worker.min.js";
-type EditState = null | "Paint" | "Text";
+type EditState = "" | "Paint" | "Text";
 export default defineComponent({
   props: {
     src: {
+      type: String,
+      default: ""
+    },
+    name: {
       type: String,
       default: ""
     },
@@ -159,22 +124,20 @@ export default defineComponent({
   },
   emits: ["update-state", "get-annotate", "create-annotate"],
   components: {
-    NButton,
-    NButtonGroup,
     NLayout,
     NLayoutSider,
     NLayoutContent,
     NList,
     NListItem,
     NTime,
-    NPagination,
     NH6,
 
+    HeaderBox,
+    ToolsBox,
     Paint,
     Text
   },
   setup(props, { emit }) {
-    const { goBack } = useImpRoute();
     const state = reactive({
       CanvasRef: {} as HTMLCanvasElement,
       PaintRef: {} as any,
@@ -185,7 +148,7 @@ export default defineComponent({
       isAnnotate: false,
       current: 1,
       total: 0,
-      editState: null as EditState,
+      editState: "" as EditState,
       pdfDoc: {} as PDFDocumentProxy,
       pdfPage: {} as PDFPageProxy,
       info: {
@@ -304,9 +267,13 @@ export default defineComponent({
     };
     onMounted(() => {
       getPdfDoc();
+      watchEffect(() => {
+        if (state.isAnnotate === false) {
+          state.editState = "";
+        }
+      });
     });
     return {
-      goBack,
       fullscreen,
       handleSave,
       handlePage,
@@ -329,17 +296,6 @@ export default defineComponent({
 .viewer-wrap {
   flex: 1 0 0;
   display: flex;
-}
-.header-box {
-  display: flex;
-  justify-content: space-between;
-}
-.tabs {
-  display: flex;
-}
-.viewer-tools {
-  display: flex;
-  align-items: center;
 }
 .tools-box {
   display: flex;

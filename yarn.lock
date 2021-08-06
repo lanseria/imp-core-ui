@@ -1254,12 +1254,7 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*", "@types/lodash@^4.14.170":
-  version "4.14.171"
-  resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.171.tgz#f01b3a5fe3499e34b622c362a46a609fdb23573b"
-  integrity sha1-8Bs6X+NJnjS2IsNipGpgn9sjVzs=
-
-"@types/lodash@^4.14.168":
+"@types/lodash@*", "@types/lodash@^4.14.168", "@types/lodash@^4.14.170":
   version "4.14.172"
   resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.172.tgz#aad774c28e7bfd7a67de25408e03ee5a8c3d028a"
   integrity sha1-qtd0wo57/Xpn3iVAjgPuWow9Aoo=
@@ -1270,18 +1265,18 @@
   integrity sha1-5waVHV4ztPCku3Ox+LEk4m8IHeA=
 
 "@types/node@*":
-  version "16.4.10"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.4.10.tgz?cache=0&sync_timestamp=1627817716261&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.4.10.tgz#e57e2a54fc6da58da94b3571b1cb456d39f88597"
-  integrity sha1-5X4qVPxtpY2pSzVxsctFbTn4hZc=
+  version "16.4.13"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.4.13.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.4.13.tgz#7dfd9c14661edc65cccd43a29eb454174642370d"
+  integrity sha1-ff2cFGYe3GXMzUOinrRUF0ZCNw0=
 
 "@types/node@^14.14.10":
-  version "14.17.7"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.17.7.tgz?cache=0&sync_timestamp=1627817716261&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.17.7.tgz#e106997493e617edeba52fdbd965930da494113b"
-  integrity sha1-4QaZdJPmF+3rpS/b2WWTDaSUETs=
+  version "14.17.9"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.17.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.17.9.tgz#b97c057e6138adb7b720df2bd0264b03c9f504fd"
+  integrity sha1-uXwFfmE4rbe3IN8r0CZLA8n1BP0=
 
 "@types/node@~14.14.31":
   version "14.14.45"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.14.45.tgz?cache=0&sync_timestamp=1627817716261&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.45.tgz#ec2dfb5566ff814d061aef7e141575aedba245cf"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.14.45.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.45.tgz#ec2dfb5566ff814d061aef7e141575aedba245cf"
   integrity sha1-7C37VWb/gU0GGu9+FBV1rtuiRc8=
 
 "@types/qs@^6.9.5":
@@ -3110,9 +3105,9 @@ ms@2.1.2:
   integrity sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=
 
 naive-ui@^2.12.0:
-  version "2.16.0"
-  resolved "https://registry.nlark.com/naive-ui/download/naive-ui-2.16.0.tgz#42d8b6120ab061e46a316ac074c5b788139cd744"
-  integrity sha1-Qti2EgqwYeRqMWrAdMW3iBOc10Q=
+  version "2.16.1"
+  resolved "https://registry.nlark.com/naive-ui/download/naive-ui-2.16.1.tgz#0599e6748f498ad8f4f2f4c6c0637c1f1d860827"
+  integrity sha1-BZnmdI9Jitj08vTGwGN8Hx2GCCc=
   dependencies:
     "@css-render/plugin-bem" "^0.15.4"
     "@css-render/vue3-ssr" "^0.15.4"
@@ -3438,7 +3433,7 @@ randombytes@^2.1.0:
 
 react-is@^17.0.1:
   version "17.0.2"
-  resolved "https://registry.nlark.com/react-is/download/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
+  resolved "https://registry.nlark.com/react-is/download/react-is-17.0.2.tgz?cache=0&sync_timestamp=1628093762218&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact-is%2Fdownload%2Freact-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha1-5pHUqOnHiTZWVVOas3J2Kw77VPA=
 
 readable-stream@^2.0.2, readable-stream@~2.3.6:
