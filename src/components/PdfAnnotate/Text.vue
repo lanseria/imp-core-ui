@@ -50,7 +50,7 @@ const Text = defineComponent({
       TextRef: {} as HTMLCanvasElement,
       ctx: null as CanvasRenderingContext2D | null,
       isSearhing: true,
-      textAreaList: [] as any[]
+      textAreaList: [] as IObj[]
     });
     // computed
     const textCursor = computed(() => {
@@ -61,7 +61,7 @@ const Text = defineComponent({
       }
     });
     // method
-    const updateTextList = (i: number, obj: any) => {
+    const updateTextList = (i: number, obj: IObj) => {
       state.textAreaList[i] = obj;
     };
     const drawTextBoxAndSave = () => {

@@ -47,9 +47,11 @@ export default defineComponent({
     const handleCreateAnnotate = async (obj: any) => {
       const { data } = await adminPdfAnnotateCreateReq({
         relationId: modelRef.value.id,
-        remarks: "批注1",
         ...obj
       });
+      if (data) {
+        window.$message.success("创建批注成功");
+      }
       modelRef.value.pageNumber = obj.pageNumber;
       handleGetAnnotate();
     };

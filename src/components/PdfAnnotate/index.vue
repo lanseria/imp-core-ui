@@ -13,13 +13,19 @@
       <ToolsBox
         :isAnnotate="isAnnotate"
         :editState="editState"
-        @on-save="handleSave()"
+        :paintState="paintState"
+        @on-save="handleSave"
         @update:editState="v => (editState = v)"
+        @update:paintState="v => (paintState = v)"
       ></ToolsBox>
     </div>
     <div class="viewer-wrap">
       <n-layout has-sider>
-        <Sider v-if="isAnnotate" :annotateList="annotateList"></Sider>
+        <Sider
+          v-if="isAnnotate"
+          :annotateList="annotateList"
+          @load-page="handleRefreshPage()"
+        ></Sider>
         <n-layout-content>
           <div class="render-content" ref="RenderContentRef">
             <template v-if="isAnnotate">
@@ -27,6 +33,8 @@
                 ref="PaintRef"
                 :width="CanvasRef.width"
                 :height="CanvasRef.height"
+                :lineWidth="paintState.size"
+                :lineColor="paintState.color"
                 :enabled="editState === 'Paint'"
               ></Paint>
               <Text
@@ -116,6 +124,10 @@ export default defineComponent({
       current: 1,
       total: 0,
       editState: "" as EditState,
+      paintState: {
+        size: 3,
+        color: "#000"
+      } as PaintState,
       pdfDoc: {} as PDFDocumentProxy,
       pdfPage: {} as PDFPageProxy,
       info: {
@@ -145,7 +157,7 @@ export default defineComponent({
         state.PdfAnnotateRef.requestFullscreen();
       }
     };
-    const handleSave = () => {
+    const handleSave = (remarks: string) => {
       const paintContext = state.PaintRef.$el.getContext("2d");
       const textCanvas = state.TextRef.drawTextBoxAndSave();
       paintContext?.drawImage(
@@ -164,6 +176,7 @@ export default defineComponent({
           window.$message.success(msg);
         } else {
           emit("create-annotate", {
+            remarks,
             content: data.url,
             pageNumber: state.current
           });
@@ -208,6 +221,10 @@ export default defineComponent({
         top: 0
       });
     };
+    const handleRefreshPage = async () => {
+      await getPdfPage(state.current);
+      emit("get-annotate", state.current);
+    };
     const handlePage = async (page: number) => {
       await getPdfPage(page);
       state.current = page;
@@ -244,6 +261,7 @@ export default defineComponent({
       fullscreen,
       handleSave,
       handlePage,
+      handleRefreshPage,
       ...toRefs(state)
     };
   }

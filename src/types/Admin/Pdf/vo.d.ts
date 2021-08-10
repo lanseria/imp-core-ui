@@ -1,4 +1,5 @@
 interface PdfAnnotateVO {
+  id: number;
   content: string;
   createTime: string;
   isShared: string;
@@ -21,4 +22,9 @@ interface PdfPageVO {
   updateTime: string;
   url: string;
   userId: number;
+}
+
+interface PaintState {
+  size: number;
+  color: string;
 }

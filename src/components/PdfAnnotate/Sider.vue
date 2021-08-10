@@ -11,14 +11,14 @@
     <div></div>
     <n-h6 prefix="bar">我的批注</n-h6>
     <n-list bordered>
-      <n-list-item v-for="item in annotateList" :key="item.relationId">
+      <n-list-item v-for="item in annotateList" :key="item.id">
         <template #prefix>
           <img style="background: #fff" width="40" :src="item.content" />
         </template>
         <template #suffix>
           <n-space :wrap="false" align="center">
             <n-time :time="new Date(item.createTime)" format="hh:mm:ss" />
-            <n-dropdown :options="options">
+            <n-dropdown :options="options" @select="handleSelect(item, $event)">
               <n-button size="small" text>
                 <n-icon>
                   <EllipsisVerticalIcon />
@@ -51,7 +51,8 @@ import {
   TrashOutline as TrashOutlineIcon
 } from "@vicons/ionicons5";
 import { renderIcon } from "/@/utils/render";
-
+import { useIepOperate } from "/@/hooks/useOperate";
+import { adminPdfAnnotationDeleteByIdReq } from "/@/api/Admin/Pdf";
 export default defineComponent({
   components: {
     NSpace,
@@ -71,7 +72,22 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  emits: ["load-page"],
+  setup(props, { emit }) {
+    const { handleIepOperate } = useIepOperate();
+    const loadPage = () => {
+      emit("load-page");
+    };
+    const handleSelect = (item: IObj, key: string) => {
+      if (key === "delete") {
+        handleIepOperate(
+          item.id,
+          adminPdfAnnotationDeleteByIdReq,
+          loadPage,
+          "删除"
+        );
+      }
+    };
     return {
       options: [
         {
@@ -79,7 +95,8 @@ export default defineComponent({
           key: "delete",
           icon: renderIcon(TrashOutlineIcon)
         }
-      ]
+      ],
+      handleSelect
     };
   }
 });

@@ -23,6 +23,10 @@ const Paint = defineComponent({
       type: Number,
       default: 3
     },
+    lineColor: {
+      type: String,
+      default: "#000"
+    },
     enabled: {
       type: Boolean,
       required: true
@@ -47,6 +51,7 @@ const Paint = defineComponent({
             state.ctx.lineWidth = props.lineWidth * 2;
             state.ctx.lineCap = "round";
             state.ctx.lineJoin = "round";
+            state.ctx.strokeStyle = props.lineColor;
             state.ctx.stroke();
             state.ctx.beginPath();
             state.ctx.arc(n[0], n[1], props.lineWidth, 0, 2 * Math.PI, true);

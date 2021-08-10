@@ -15,9 +15,17 @@ export const adminPdfDetailByIdReq = (id: number) => {
     method: "GET"
   });
 };
+
 export const adminPdfDeleteByIdReq = (id: number) => {
   return r.request<R<boolean>>({
     url: `${api.pdfDelete}/${id}`,
+    method: "POST"
+  });
+};
+
+export const adminPdfAnnotationDeleteByIdReq = (id: number) => {
+  return r.request<R<boolean>>({
+    url: `${api.pdfAnnotationDelete}/${id}`,
     method: "POST"
   });
 };

@@ -27,8 +27,18 @@
           </template>
         </n-button>
       </n-space>
-      <n-space class="property"></n-space>
+      <PaintProp
+        v-if="editState === 'Paint'"
+        :paintState="paintState"
+        @update:paintState="handleUpdatePaintState"
+      ></PaintProp>
       <n-space class="operate">
+        <n-input
+          v-model:value="remarks"
+          size="small"
+          type="text"
+          placeholder="备注"
+        />
         <n-button size="small" type="primary" @click="handleSave()" ghost>
           <template #icon>
             <n-icon>
@@ -41,13 +51,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { NIcon, NSpace, NButton } from "naive-ui";
+import { defineComponent, ref, PropType } from "vue";
+import { NIcon, NSpace, NButton, NInput } from "naive-ui";
 import {
   BrushSharp as BrushSharpIcon,
   Text as TextIcon,
   SaveOutline as SaveOutlineIcon
 } from "@vicons/ionicons5";
+import PaintProp from "./PaintProp.vue";
 export default defineComponent({
   props: {
     isAnnotate: {
@@ -57,22 +68,30 @@ export default defineComponent({
     editState: {
       type: String,
       required: true
+    },
+    paintState: {
+      type: Object as PropType<PaintState>,
+      required: true
     }
   },
   components: {
     NIcon,
     NSpace,
     NButton,
+    NInput,
 
     BrushSharpIcon,
     TextIcon,
-    SaveOutlineIcon
+    SaveOutlineIcon,
+
+    PaintProp
   },
-  emits: ["on-save", "update:editState"],
+  emits: ["on-save", "update:editState", "update:paintState"],
   setup(props, { emit }) {
-    const showBrushPopover = ref(false);
+    const remarks = ref("备注1");
     const handleSave = () => {
-      emit("on-save");
+      emit("on-save", remarks.value);
+      remarks.value = "";
     };
     const handleText = () => {
       emit("update:editState", "Text");
@@ -80,11 +99,15 @@ export default defineComponent({
     const handlePaint = () => {
       emit("update:editState", "Paint");
     };
+    const handleUpdatePaintState = (v: PaintState) => {
+      emit("update:paintState", v);
+    };
     return {
+      remarks,
       handleSave,
       handleText,
       handlePaint,
-      showBrushPopover
+      handleUpdatePaintState
     };
   }
 });

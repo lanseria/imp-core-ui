@@ -81,8 +81,6 @@ export default defineComponent({
       pushPath(`/center/my/pdf-detail/${row.id}`);
     };
     const handleSelect = (item: IObj, key: string) => {
-      //
-      console.log(key);
       if (key === "delete") {
         handleIepOperate(item.id, adminPdfDeleteByIdReq, loadPage, "删除");
       }
