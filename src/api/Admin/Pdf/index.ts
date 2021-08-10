@@ -1,5 +1,6 @@
-import r from "/@/router/axios";
+import r, { requestWithRes } from "/@/router/axios";
 import { api } from "./config";
+import qs from "qs";
 
 export const adminPdfPageReq = (params: Partial<PageParam>) => {
   return r.request<R<PageResult<IObj>>>({
@@ -31,23 +32,28 @@ export const adminPdfShareByIdReq = (id: number) => {
 };
 
 export const adminPdfDownloadByIdReq = (id: number) => {
-  r.request<R<boolean>>({
-    url: `${api.pdfDownload}/${id}`,
-    method: "GET"
-  }).then(data => {
-    // 处理返回的文件流
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const blob = new Blob([data as any]);
-    const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = "批注的文件.pdf";
-    document.body.appendChild(link);
-    link.style.display = "none";
-    link.click();
-    // 关闭定时信息
-    // window.clearTimeout(downLoadCode1);
-    // window.clearInterval(downLoadCode2);
-  });
+  requestWithRes
+    .request<R<boolean>>({
+      url: `${api.pdfDownload}/${id}`,
+      method: "GET",
+      responseType: "arraybuffer"
+    })
+    .then((res: any) => {
+      // 处理返回的文件流
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const fileQs = res.headers["content-disposition"];
+      const fileObj = qs.parse(fileQs, { delimiter: ";" });
+      const blob = new Blob([res.data as any]);
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = fileObj.filename as string;
+      document.body.appendChild(link);
+      link.style.display = "none";
+      link.click();
+      // 关闭定时信息
+      // window.clearTimeout(downLoadCode1);
+      // window.clearInterval(downLoadCode2);
+    });
 };
 
 export const adminPdfAnnotationDeleteByIdReq = (id: number) => {
