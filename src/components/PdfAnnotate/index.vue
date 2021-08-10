@@ -19,30 +19,7 @@
     </div>
     <div class="viewer-wrap">
       <n-layout has-sider>
-        <n-layout-sider
-          v-if="isAnnotate"
-          :native-scrollbar="false"
-          :collapsed-width="0"
-          collapse-mode="transform"
-          bordered
-          show-trigger="bar"
-        >
-          <n-h6>我的批注</n-h6>
-          <n-list bordered>
-            <n-list-item v-for="item in annotateList" :key="item.relationId">
-              <template #prefix>
-                <img width="40" :src="item.content" />
-              </template>
-              <template #suffix>
-                <n-time
-                  :time="new Date(item.createTime)"
-                  format="MM-dd hh:mm:ss"
-                />
-              </template>
-              {{ item.remarks }}
-            </n-list-item>
-          </n-list>
-        </n-layout-sider>
+        <Sider v-if="isAnnotate" :annotateList="annotateList"></Sider>
         <n-layout-content>
           <div class="render-content" ref="RenderContentRef">
             <template v-if="isAnnotate">
@@ -76,18 +53,9 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  NLayout,
-  NLayoutSider,
-  NLayoutContent,
-  NList,
-  NListItem,
-  NTime,
-  NH6
-} from "naive-ui";
+import { NLayout, NLayoutContent } from "naive-ui";
 import {
   defineComponent,
-  ref,
   onMounted,
   reactive,
   toRefs,
@@ -102,12 +70,14 @@ import {
 } from "pdfjs-dist/types/display/api";
 import HeaderBox from "./HeaderBox.vue";
 import ToolsBox from "./ToolsBox.vue";
+import Sider from "./Sider.vue";
 import Paint from "./Paint.vue";
 import Text from "./Text.vue";
 import { postFileUploadAvatarReq } from "/@/api/Admin/File";
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://unpkg.zhimg.com/pdfjs-dist@2.9.359/build/pdf.worker.min.js";
 type EditState = "" | "Paint" | "Text";
+
 export default defineComponent({
   props: {
     src: {
@@ -119,21 +89,18 @@ export default defineComponent({
       default: ""
     },
     annotateList: {
-      type: Array as PropType<PdfAnnotateVO[]>
+      type: Array as PropType<PdfAnnotateVO[]>,
+      required: true
     }
   },
   emits: ["update-state", "get-annotate", "create-annotate"],
   components: {
     NLayout,
-    NLayoutSider,
     NLayoutContent,
-    NList,
-    NListItem,
-    NTime,
-    NH6,
 
     HeaderBox,
     ToolsBox,
+    Sider,
     Paint,
     Text
   },
@@ -284,7 +251,6 @@ export default defineComponent({
 </script>
 <style lang="css" scoped>
 .pdf-annotate {
-  background-color: var(--color-modal);
   display: flex;
   flex-direction: column;
 }

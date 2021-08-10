@@ -1,54 +1,52 @@
 <template>
   <div v-if="isAnnotate" class="tools-box">
-    <n-space>
-      <div
-        class="brush-btn icon-btn canvas-btn"
-        :class="{ active: editState === 'Paint' }"
-        @click="handlePaint()"
-      >
-        <n-icon size="15">
-          <BrushSharpIcon />
-        </n-icon>
-        <n-popover trigger="manual" placement="bottom" :show="showBrushPopover">
-          <template #trigger>
-            <n-icon
-              size="10"
-              class="down-icon"
-              @click="showBrushPopover = !showBrushPopover"
-            >
-              <CaretDownIcon /> </n-icon
-          ></template>
-          <span>Stroke</span>
-        </n-popover>
-      </div>
-      <div
-        class="text-btn icon-btn canvas-btn"
-        :class="{ active: editState === 'Text' }"
-        @click="handleText()"
-      >
-        <n-icon size="15">
-          <TextIcon />
-        </n-icon>
-        <n-icon size="10" class="down-icon">
-          <CaretDownIcon />
-        </n-icon>
-      </div>
-      <div class="icon-btn" @click="handleSave()">
-        <n-icon size="15">
-          <SaveOutlineIcon />
-        </n-icon>
-      </div>
+    <n-space justify="space-between" style="flex: 1">
+      <n-space class="select">
+        <n-button
+          size="small"
+          :type="editState === 'Paint' ? 'primary' : 'default'"
+          @click="handlePaint()"
+          ghost
+        >
+          <template #icon>
+            <n-icon>
+              <BrushSharpIcon />
+            </n-icon>
+          </template>
+        </n-button>
+        <n-button
+          size="small"
+          :type="editState === 'Text' ? 'primary' : 'default'"
+          @click="handleText()"
+          ghost
+        >
+          <template #icon>
+            <n-icon>
+              <TextIcon />
+            </n-icon>
+          </template>
+        </n-button>
+      </n-space>
+      <n-space class="property"></n-space>
+      <n-space class="operate">
+        <n-button size="small" type="primary" @click="handleSave()" ghost>
+          <template #icon>
+            <n-icon>
+              <SaveOutlineIcon />
+            </n-icon>
+          </template>
+        </n-button>
+      </n-space>
     </n-space>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { NIcon, NSpace, NPopover } from "naive-ui";
+import { NIcon, NSpace, NButton } from "naive-ui";
 import {
   BrushSharp as BrushSharpIcon,
   Text as TextIcon,
-  SaveOutline as SaveOutlineIcon,
-  CaretDown as CaretDownIcon
+  SaveOutline as SaveOutlineIcon
 } from "@vicons/ionicons5";
 export default defineComponent({
   props: {
@@ -64,12 +62,11 @@ export default defineComponent({
   components: {
     NIcon,
     NSpace,
-    NPopover,
+    NButton,
 
     BrushSharpIcon,
     TextIcon,
-    SaveOutlineIcon,
-    CaretDownIcon
+    SaveOutlineIcon
   },
   emits: ["on-save", "update:editState"],
   setup(props, { emit }) {
@@ -97,7 +94,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--color-popover);
+  background-color: var(--color-modal);
   align-items: center;
   height: 50px;
   padding: 0 20px;

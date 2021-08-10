@@ -17,37 +17,16 @@
         </n-input-group>
       </n-space>
     </div>
-    <div class="pdf-grid">
+    <n-grid x-gap="12" :cols="5">
       <template v-if="loading">
         <n-skeleton text :repeat="2" /> <n-skeleton text style="width: 60%" />
       </template>
       <template v-else>
-        <n-badge
-          v-for="item in pagedTable"
-          :key="item.id"
-          dot
-          type="warning"
-          :show="item.annotation"
-        >
-          <n-card size="small" hoverable @click="handelDetail(item)">
-            <template #header>
-              <n-ellipsis style="max-width: 200px"
-                >{{ item.name }}
-                <template #tooltip>
-                  <div style="text-align: center">
-                    {{ item.name }}
-                  </div>
-                </template>
-              </n-ellipsis>
-            </template>
-            <template #cover>
-              <img :src="item.cover" />
-            </template>
-            <n-time :time="new Date(item.createTime)" />
-          </n-card>
-        </n-badge>
+        <n-gi v-for="item in pagedTable" :key="item.id">
+          <PageItem :item="item"></PageItem>
+        </n-gi>
       </template>
-    </div>
+    </n-grid>
   </imp-page-container>
   <upload-modal ref="UploadModalRef" @load-page="loadPage()"></upload-modal>
 </template>
@@ -57,18 +36,15 @@ import {
   NSpace,
   NInputGroup,
   NInput,
-  NIcon,
-  NCard,
-  NTime,
-  NEllipsis,
-  NBadge,
-  NSkeleton
+  NSkeleton,
+  NGrid,
+  NGi
 } from "naive-ui";
 import { SearchOutline as SearchOutlineIcon } from "@vicons/ionicons5";
 import { defineComponent, onMounted, ref } from "vue";
 import { adminPdfPageReq } from "/@/api/Admin/Pdf";
 import UploadModal from "./UploadModal.vue";
-import { useImpRoute } from "/@/hooks/useRoute";
+import PageItem from "./PageItem.vue";
 class PaginationDTO {
   page = 1;
   pageSize = 10;
@@ -81,18 +57,15 @@ export default defineComponent({
     NSpace,
     NInputGroup,
     NInput,
-    NIcon,
-    NCard,
-    NTime,
-    NEllipsis,
-    NBadge,
     NSkeleton,
+    NGrid,
+    NGi,
 
     SearchOutlineIcon,
-    UploadModal
+    UploadModal,
+    PageItem
   },
   setup() {
-    const { pushPath } = useImpRoute();
     // ref
     const loading = ref(false);
     const searchName = ref("");
@@ -122,9 +95,6 @@ export default defineComponent({
     };
     const handleAdd = () => {
       UploadModalRef.value.open();
-    };
-    const handelDetail = (row: IObj) => {
-      pushPath(`/center/my/pdf-detail/${row.id}`);
     };
     const handleSearch = () => {
       loadPage({
@@ -160,7 +130,6 @@ export default defineComponent({
       // method
       loadPage,
       handleAdd,
-      handelDetail,
       handleSearch,
       handlePageChange,
       handlePageSizeChange
@@ -175,9 +144,7 @@ export default defineComponent({
   justify-content: space-between;
   margin: 10px 0;
 }
-.pdf-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px;
+.ellipsis:hover {
+  color: var(--text-color-hover);
 }
 </style>

@@ -92,6 +92,7 @@ export default defineComponent({
 </script>
 <style lang="css" scoped>
 .header-box {
+  background-color: var(--color-modal);
   display: flex;
   justify-content: space-between;
   align-items: center;

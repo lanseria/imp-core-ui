@@ -68,10 +68,10 @@ export default defineComponent({
       imgUrl.value = "";
       ImpModalRef.value.showModal = false;
     };
-    const onBeforeUpload = async ({ file }: { file: any }) => {
+    const onBeforeUpload = async ({ file }: { file: IObj }) => {
       const reader = new FileReader();
-      // 把Array Buffer转化为blob 如果是base64不需要
-      // 转化为base64
+      // 把 Array Buffer 转化为 blob 如果是 base64 不需要
+      // 转化为 base64
       fileName = file.name;
       reader.readAsDataURL(file.file);
       reader.onload = () => {

@@ -4,6 +4,7 @@ const prefix = `${modulePrefix}/pdf`;
 const api = {
   pdfPage: `${prefix}/page`, // GET
   pdfDetail: `${prefix}/detail`, // GET
+  pdfDelete: `${prefix}/delete`, // GET
   pdfContent: `${prefix}/page/content`, // GET
   pdfAnnotate: `${prefix}/my_endorsements`, // GET
   uploadAnnotation: `${prefix}/upload/annotation` // GET
