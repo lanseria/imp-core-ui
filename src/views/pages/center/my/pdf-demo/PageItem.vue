@@ -18,7 +18,7 @@
       </template>
       <n-space :wrap="false" align="center">
         <n-time :time="new Date(item.createTime)" format="yyyy-MM-dd hh:mm" />
-        <n-dropdown :options="options" @select="handleSelect">
+        <n-dropdown :options="options" @select="handleSelect(item, $event)">
           <n-button size="small" text>
             <n-icon>
               <EllipsisVerticalIcon />
@@ -48,6 +48,8 @@ import {
   EllipsisVertical as EllipsisVerticalIcon,
   TrashOutline as TrashOutlineIcon
 } from "@vicons/ionicons5";
+import { useIepOperate } from "/@/hooks/useOperate";
+import { adminPdfDeleteByIdReq } from "/@/api/Admin/Pdf";
 export default defineComponent({
   props: {
     item: {
@@ -67,13 +69,23 @@ export default defineComponent({
 
     EllipsisVerticalIcon
   },
-  setup() {
+  emits: ["load-page"],
+  setup(props, { emit }) {
+    const { handleIepOperate } = useIepOperate();
     const { pushPath } = useImpRoute();
+    // method
+    const loadPage = () => {
+      emit("load-page");
+    };
     const handleDetail = (row: IObj) => {
       pushPath(`/center/my/pdf-detail/${row.id}`);
     };
-    const handleSelect = () => {
+    const handleSelect = (item: IObj, key: string) => {
       //
+      console.log(key);
+      if (key === "delete") {
+        handleIepOperate(item.id, adminPdfDeleteByIdReq, loadPage, "删除");
+      }
     };
     return {
       options: [

@@ -16,7 +16,7 @@
           <img style="background: #fff" width="40" :src="item.content" />
         </template>
         <template #suffix>
-          <n-space>
+          <n-space :wrap="false" align="center">
             <n-time :time="new Date(item.createTime)" format="hh:mm:ss" />
             <n-dropdown :options="options">
               <n-button size="small" text>
@@ -62,7 +62,8 @@ export default defineComponent({
     NH6,
     NButton,
     NDropdown,
-    NIcon
+    NIcon,
+    EllipsisVerticalIcon
   },
   props: {
     annotateList: {

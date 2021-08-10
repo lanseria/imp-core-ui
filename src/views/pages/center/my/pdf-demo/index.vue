@@ -23,7 +23,7 @@
       </template>
       <template v-else>
         <n-gi v-for="item in pagedTable" :key="item.id">
-          <PageItem :item="item"></PageItem>
+          <PageItem :item="item" @load-page="loadPage()"></PageItem>
         </n-gi>
       </template>
     </n-grid>
@@ -37,6 +37,7 @@ import {
   NInputGroup,
   NInput,
   NSkeleton,
+  NIcon,
   NGrid,
   NGi
 } from "naive-ui";
@@ -58,6 +59,7 @@ export default defineComponent({
     NInputGroup,
     NInput,
     NSkeleton,
+    NIcon,
     NGrid,
     NGi,
 
