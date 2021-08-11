@@ -29,3 +29,11 @@ interface PaintState {
   size: number;
   color: string;
 }
+
+interface TextAreaItemVO {
+  id: string;
+  x: number;
+  y: number;
+  text: string;
+  size: number;
+}

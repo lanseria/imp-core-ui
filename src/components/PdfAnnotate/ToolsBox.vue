@@ -1,52 +1,55 @@
 <template>
   <div v-if="isAnnotate" class="tools-box">
-    <n-space justify="space-between" style="flex: 1">
-      <n-space class="select">
-        <n-button
-          size="small"
-          :type="editState === 'Paint' ? 'primary' : 'default'"
-          @click="handlePaint()"
-          ghost
-        >
-          <template #icon>
-            <n-icon>
-              <BrushSharpIcon />
-            </n-icon>
-          </template>
-        </n-button>
-        <n-button
-          size="small"
-          :type="editState === 'Text' ? 'primary' : 'default'"
-          @click="handleText()"
-          ghost
-        >
-          <template #icon>
-            <n-icon>
-              <TextIcon />
-            </n-icon>
-          </template>
-        </n-button>
-      </n-space>
-      <PaintProp
-        v-if="editState === 'Paint'"
-        :paintState="paintState"
-        @update:paintState="handleUpdatePaintState"
-      ></PaintProp>
-      <n-space class="operate">
-        <n-input
-          v-model:value="remarks"
-          size="small"
-          type="text"
-          placeholder="备注"
-        />
-        <n-button size="small" type="primary" @click="handleSave()" ghost>
-          <template #icon>
-            <n-icon>
-              <SaveOutlineIcon />
-            </n-icon>
-          </template>
-        </n-button>
-      </n-space>
+    <n-space class="select">
+      <n-button
+        size="small"
+        :type="editState === 'Paint' ? 'primary' : 'default'"
+        @click="handlePaint()"
+        ghost
+      >
+        <template #icon>
+          <n-icon>
+            <BrushSharpIcon />
+          </n-icon>
+        </template>
+      </n-button>
+      <n-button
+        size="small"
+        :type="editState === 'Text' ? 'primary' : 'default'"
+        @click="handleText()"
+        ghost
+      >
+        <template #icon>
+          <n-icon>
+            <TextIcon />
+          </n-icon>
+        </template>
+      </n-button>
+    </n-space>
+    <PaintProp
+      v-if="editState === 'Paint'"
+      :paintState="paintState"
+      @update:paintState="handleUpdatePaintState"
+    ></PaintProp>
+    <TextProp
+      v-if="editState === 'Text'"
+      :textState="textState"
+      @update:textState="handleUpdateTextState"
+    ></TextProp>
+    <n-space class="operate">
+      <n-input
+        v-model:value="remarks"
+        size="small"
+        type="text"
+        placeholder="备注"
+      />
+      <n-button size="small" type="primary" @click="handleSave()" ghost>
+        <template #icon>
+          <n-icon>
+            <SaveOutlineIcon />
+          </n-icon>
+        </template>
+      </n-button>
     </n-space>
   </div>
 </template>
@@ -59,6 +62,7 @@ import {
   SaveOutline as SaveOutlineIcon
 } from "@vicons/ionicons5";
 import PaintProp from "./PaintProp.vue";
+import TextProp from "./TextProp.vue";
 export default defineComponent({
   props: {
     isAnnotate: {
@@ -70,6 +74,10 @@ export default defineComponent({
       required: true
     },
     paintState: {
+      type: Object as PropType<PaintState>,
+      required: true
+    },
+    textState: {
       type: Object as PropType<PaintState>,
       required: true
     }
@@ -84,9 +92,15 @@ export default defineComponent({
     TextIcon,
     SaveOutlineIcon,
 
-    PaintProp
+    PaintProp,
+    TextProp
   },
-  emits: ["on-save", "update:editState", "update:paintState"],
+  emits: [
+    "on-save",
+    "update:editState",
+    "update:paintState",
+    "update:textState"
+  ],
   setup(props, { emit }) {
     const remarks = ref("备注1");
     const handleSave = () => {
@@ -102,12 +116,16 @@ export default defineComponent({
     const handleUpdatePaintState = (v: PaintState) => {
       emit("update:paintState", v);
     };
+    const handleUpdateTextState = (v: PaintState) => {
+      emit("update:textState", v);
+    };
     return {
       remarks,
       handleSave,
       handleText,
       handlePaint,
-      handleUpdatePaintState
+      handleUpdatePaintState,
+      handleUpdateTextState
     };
   }
 });
@@ -115,7 +133,7 @@ export default defineComponent({
 <style lang="css" scoped>
 .tools-box {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: var(--color-modal);
   align-items: center;

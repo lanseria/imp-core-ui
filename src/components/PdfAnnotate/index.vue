@@ -14,9 +14,11 @@
         :isAnnotate="isAnnotate"
         :editState="editState"
         :paintState="paintState"
+        :textState="textState"
         @on-save="handleSave"
         @update:editState="v => (editState = v)"
         @update:paintState="v => (paintState = v)"
+        @update:textState="v => (textState = v)"
       ></ToolsBox>
     </div>
     <div class="viewer-wrap">
@@ -41,6 +43,8 @@
                 ref="TextRef"
                 :width="CanvasRef.width"
                 :height="CanvasRef.height"
+                :fontSize="textState.size"
+                :fontColor="textState.color"
                 :enabled="editState === 'Text'"
               ></Text>
             </template>
@@ -128,6 +132,10 @@ export default defineComponent({
         size: 3,
         color: "#000"
       } as PaintState,
+      textState: {
+        size: 14,
+        color: "#000"
+      } as PaintState,
       pdfDoc: {} as PDFDocumentProxy,
       pdfPage: {} as PDFPageProxy,
       info: {
@@ -158,31 +166,35 @@ export default defineComponent({
       }
     };
     const handleSave = (remarks: string) => {
-      state.editState = "";
-      const paintContext = state.PaintRef.$el.getContext("2d");
-      const textCanvas = state.TextRef.drawTextBoxAndSave();
-      paintContext?.drawImage(
-        textCanvas,
-        state.CanvasRef.width,
-        state.CanvasRef.height
-      );
-      state.PaintRef.$el.toBlob(async (blob: Blob) => {
-        const formData = new FormData();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        formData.append("file", blob, "1.png");
-        // const img = window.URL.createObjectURL(blob);
-        // console.log(img);
-        const { code, msg, data } = await postFileUploadAvatarReq(formData);
-        if (code) {
-          window.$message.success(msg);
-        } else {
-          emit("create-annotate", {
-            remarks,
-            content: data.url,
-            pageNumber: state.current
+      const PaintCanvas: HTMLCanvasElement = state.PaintRef.$el;
+      const paintContext = PaintCanvas.getContext("2d");
+      if (paintContext) {
+        const textCanvas: HTMLCanvasElement =
+          state.TextRef.drawTextBoxAndSave();
+        // 混合两幅 canvas 图像
+        paintContext.globalCompositeOperation = "lighter";
+        paintContext.drawImage(textCanvas, 0, 0);
+        // paintContext.putImageData(textCanvasImageData, 0, 0);
+        PaintCanvas.toBlob(blob => {
+          const formData = new FormData();
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          blob && formData.append("file", blob, "1.png");
+          // const img = window.URL.createObjectURL(blob);
+          // console.log(img);
+          postFileUploadAvatarReq(formData).then(({ code, msg, data }) => {
+            if (code) {
+              window.$message.warning(msg);
+            } else {
+              emit("create-annotate", {
+                remarks,
+                content: data.url,
+                pageNumber: state.current
+              });
+              state.editState = "";
+            }
           });
-        }
-      });
+        });
+      }
     };
 
     const getBufferArray = async (src: string) => {

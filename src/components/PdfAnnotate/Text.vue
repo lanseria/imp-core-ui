@@ -2,17 +2,18 @@
   <div class="text-div" :style="{ width: `${width}px`, height: `${height}px` }">
     <TextArea
       v-for="(item, i) in textAreaList"
-      :key="i"
-      :x="item.x"
-      :y="item.y"
-      :size="item.size"
+      :key="item.id"
+      :item="item"
       @update-text-list="updateTextList(i, $event)"
+      @on-del="handleDel(item.id)"
+      @on-insert="handleInsert()"
     ></TextArea>
   </div>
   <canvas ref="TextRef" class="text" :width="width" :height="height"> </canvas>
 </template>
 <script lang="ts">
 import { useMouseInElement, useMousePressed } from "@vueuse/core";
+import { nanoid } from "nanoid";
 import {
   computed,
   defineComponent,
@@ -42,6 +43,10 @@ const Text = defineComponent({
     fontSize: {
       type: Number,
       default: 14
+    },
+    fontColor: {
+      type: String,
+      default: "#000"
     }
   },
   setup(props) {
@@ -50,7 +55,7 @@ const Text = defineComponent({
       TextRef: {} as HTMLCanvasElement,
       ctx: null as CanvasRenderingContext2D | null,
       isSearhing: true,
-      textAreaList: [] as IObj[]
+      textAreaList: [] as TextAreaItemVO[]
     });
     // computed
     const textCursor = computed(() => {
@@ -61,29 +66,41 @@ const Text = defineComponent({
       }
     });
     // method
-    const updateTextList = (i: number, obj: IObj) => {
-      state.textAreaList[i] = obj;
+    const updateTextList = (i: number, text: string) => {
+      state.textAreaList[i].text = text;
     };
     const drawTextBoxAndSave = () => {
+      // return state.TextRef.toDataURL("image/png");
+      return state.TextRef;
+    };
+    const handleDel = (id: string) => {
+      state.textAreaList = state.textAreaList.filter(m => m.id !== id);
+      state.isSearhing = true;
+    };
+    const handleInsert = () => {
       state.textAreaList.map(m => {
         if (state.ctx) {
+          state.ctx.fillStyle = props.fontColor;
           state.ctx.font = `${m.size}px system-ui`;
           // +POINTER_HEIGHT为插入中间值
           state.ctx.fillText(m.text, m.x, m.y + POINTER_HEIGHT);
         }
       });
-      // return state.TextRef.toDataURL("image/png");
-      return state.TextRef;
+      state.textAreaList = [];
+      state.isSearhing = true;
     };
     // hooks
     onMounted(() => {
       state.ctx = state.TextRef.getContext("2d");
       const { pressed } = useMousePressed();
-      const { elementX, elementY } = useMouseInElement(state.TextRef);
+      const { elementX, elementY, isOutside } = useMouseInElement(
+        state.TextRef
+      );
       watch(pressed, n => {
-        if (n && state.isSearhing && props.enabled) {
+        if (n && state.isSearhing && props.enabled && isOutside) {
           state.isSearhing = false;
           state.textAreaList.push({
+            id: nanoid(),
             x: elementX.value,
             // -POINTER_HEIGHT为插入中间值
             y: elementY.value - POINTER_HEIGHT,
@@ -99,7 +116,9 @@ const Text = defineComponent({
       textCursor,
       // method
       updateTextList,
-      drawTextBoxAndSave
+      drawTextBoxAndSave,
+      handleDel,
+      handleInsert
     };
   }
 });
