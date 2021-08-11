@@ -44,7 +44,7 @@ export default defineComponent({
       });
       annotateList.value = data;
     };
-    const handleCreateAnnotate = async (obj: any) => {
+    const handleCreateAnnotate = async (obj: IObj) => {
       const { data } = await adminPdfAnnotateCreateReq({
         relationId: modelRef.value.id,
         ...obj
@@ -55,12 +55,12 @@ export default defineComponent({
       modelRef.value.pageNumber = obj.pageNumber;
       handleGetAnnotate();
     };
-    const loadBuf = async () => {
-      adminPdfContentByIdReq({
-        id: props.id,
-        current: modelRef.value.pageNumber
-      });
-    };
+    // const loadBuf = async () => {
+    //   adminPdfContentByIdReq({
+    //     id: props.id,
+    //     current: modelRef.value.pageNumber
+    //   });
+    // };
     const loadDetail = async () => {
       loadding.value = false;
       const { data } = await adminPdfDetailByIdReq(props.id);

@@ -6,7 +6,9 @@
         :current="current"
         :total="total"
         :isAnnotate="isAnnotate"
+        :showAnnotate="showAnnotate"
         @update:isAnnotate="v => (isAnnotate = v)"
+        @update:showAnnotate="v => (showAnnotate = v)"
         @on-page="handlePage"
         @on-fullscreen="fullscreen()"
       ></HeaderBox>
@@ -49,7 +51,7 @@
               ></Text>
             </template>
             <img
-              v-for="item in annotateList"
+              v-for="item in showAnnotate ? annotateList : []"
               :key="item.relationId"
               style="position: absolute"
               :width="CanvasRef.width"
@@ -83,8 +85,8 @@ import {
 import HeaderBox from "./HeaderBox.vue";
 import ToolsBox from "./ToolsBox.vue";
 import Sider from "./Sider.vue";
-import Paint from "./Paint.vue";
-import Text from "./Text.vue";
+import Paint, { PaintRefs } from "./Paint.vue";
+import Text, { TextRefs } from "./Text.vue";
 import { postFileUploadAvatarReq } from "/@/api/Admin/File";
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://unpkg.zhimg.com/pdfjs-dist@2.9.359/build/pdf.worker.min.js";
@@ -119,12 +121,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const state = reactive({
       CanvasRef: {} as HTMLCanvasElement,
-      PaintRef: {} as any,
-      TextRef: {} as any,
+      PaintRef: {} as PaintRefs,
+      TextRef: {} as TextRefs,
       RenderContentRef: {} as HTMLElement,
       PdfAnnotateRef: {} as HTMLElement,
       loading: false,
       isAnnotate: false,
+      showAnnotate: true,
       current: 1,
       total: 0,
       editState: "" as EditState,
@@ -169,8 +172,7 @@ export default defineComponent({
       const PaintCanvas: HTMLCanvasElement = state.PaintRef.$el;
       const paintContext = PaintCanvas.getContext("2d");
       if (paintContext) {
-        const textCanvas: HTMLCanvasElement =
-          state.TextRef.drawTextBoxAndSave();
+        const textCanvas = state.TextRef.drawTextBoxAndSave();
         // 混合两幅 canvas 图像
         paintContext.globalCompositeOperation = "lighter";
         paintContext.drawImage(textCanvas, 0, 0);
@@ -202,7 +204,7 @@ export default defineComponent({
     };
     const render = async () => {
       // Display page on the existing canvas with 100% scale.
-      const viewport = state.pdfPage.getViewport({ scale: 1.0 });
+      const viewport = state.pdfPage.getViewport({ scale: 1 });
       state.CanvasRef.width = viewport.width;
       state.CanvasRef.height = viewport.height;
       const ctx = state.CanvasRef.getContext("2d");
@@ -284,11 +286,13 @@ export default defineComponent({
 .pdf-annotate {
   display: flex;
   flex-direction: column;
+  box-shadow: var(--box-shadow);
 }
 .header-tab {
   display: flex;
   flex: 0 1 0;
   flex-direction: column;
+  border-bottom: 1px solid var(--border-color);
 }
 .viewer-wrap {
   flex: 1 0 0;
@@ -306,6 +310,8 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: 20px 0;
+  box-sizing: border-box;
 }
 .render-content .pdf-canvas {
   /* box-shadow: 0px 0px 15px 5px #cfcfcf; */
