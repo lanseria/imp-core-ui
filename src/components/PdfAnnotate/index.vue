@@ -28,7 +28,7 @@
         ></Sider>
         <n-layout-content>
           <div class="render-content" ref="RenderContentRef">
-            <template v-if="isAnnotate">
+            <template v-if="isAnnotate && editState !== ''">
               <Paint
                 ref="PaintRef"
                 :width="CanvasRef.width"
@@ -158,6 +158,7 @@ export default defineComponent({
       }
     };
     const handleSave = (remarks: string) => {
+      state.editState = "";
       const paintContext = state.PaintRef.$el.getContext("2d");
       const textCanvas = state.TextRef.drawTextBoxAndSave();
       paintContext?.drawImage(

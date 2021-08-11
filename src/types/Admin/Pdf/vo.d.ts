@@ -6,6 +6,7 @@ interface PdfAnnotateVO {
   pageNumber: number;
   relationId: number;
   remarks: string;
+  realName: string;
   reviewUrl: string;
   userId: number;
 }

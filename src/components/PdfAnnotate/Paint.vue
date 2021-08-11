@@ -52,6 +52,7 @@ const Paint = defineComponent({
             state.ctx.lineCap = "round";
             state.ctx.lineJoin = "round";
             state.ctx.strokeStyle = props.lineColor;
+            state.ctx.fillStyle = props.lineColor;
             state.ctx.stroke();
             state.ctx.beginPath();
             state.ctx.arc(n[0], n[1], props.lineWidth, 0, 2 * Math.PI, true);
@@ -78,5 +79,6 @@ export type PaintRefs = InstanceType<typeof Paint>;
 <style scoped>
 .canvas {
   position: absolute;
+  z-index: 1;
 }
 </style>

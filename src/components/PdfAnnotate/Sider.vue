@@ -17,8 +17,14 @@
         </template>
         <template #suffix>
           <n-space :wrap="false" align="center">
-            <n-time :time="new Date(item.createTime)" format="hh:mm:ss" />
-            <n-dropdown :options="options" @select="handleSelect(item, $event)">
+            <div>
+              <div v-if="item.userId !== userId">{{ item.realName }}</div>
+              <n-time :time="new Date(item.createTime)" format="hh:mm:ss" />
+            </div>
+            <n-dropdown
+              :options="handleOptions(item)"
+              @select="handleSelect(item, $event)"
+            >
               <n-button size="small" text>
                 <n-icon>
                   <EllipsisVerticalIcon />
@@ -53,6 +59,7 @@ import {
 import { renderIcon } from "/@/utils/render";
 import { useIepOperate } from "/@/hooks/useOperate";
 import { adminPdfAnnotationDeleteByIdReq } from "/@/api/Admin/Pdf";
+import { useUserStore } from "/@/store/modules/user";
 export default defineComponent({
   components: {
     NSpace,
@@ -74,6 +81,7 @@ export default defineComponent({
   },
   emits: ["load-page"],
   setup(props, { emit }) {
+    const userStore = useUserStore();
     const { handleIepOperate } = useIepOperate();
     const loadPage = () => {
       emit("load-page");
@@ -88,14 +96,22 @@ export default defineComponent({
         );
       }
     };
+    const handleOptions = (item: PdfAnnotateVO) => {
+      return [
+        ...(item.userId === userStore.getUserInfo?.userId
+          ? [
+              {
+                label: "删除",
+                key: "delete",
+                icon: renderIcon(TrashOutlineIcon)
+              }
+            ]
+          : [])
+      ];
+    };
     return {
-      options: [
-        {
-          label: "删除",
-          key: "delete",
-          icon: renderIcon(TrashOutlineIcon)
-        }
-      ],
+      handleOptions,
+      userId: userStore.getUserInfo?.userId,
       handleSelect
     };
   }

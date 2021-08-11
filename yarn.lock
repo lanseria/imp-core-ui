@@ -2234,9 +2234,9 @@ eslint-plugin-prettier@^3.1.3:
     prettier-linter-helpers "^1.0.0"
 
 eslint-plugin-vue@^7.0.0-0:
-  version "7.15.1"
-  resolved "https://registry.nlark.com/eslint-plugin-vue/download/eslint-plugin-vue-7.15.1.tgz#699c1f3ce2032ea8843b8d5d1adb863b7979965c"
-  integrity sha1-aZwfPOIDLqiEO41dGtuGO3l5llw=
+  version "7.16.0"
+  resolved "https://registry.nlark.com/eslint-plugin-vue/download/eslint-plugin-vue-7.16.0.tgz#7fe9fea039a190b108319c1380adf543ef57707d"
+  integrity sha1-f+n+oDmhkLEIMZwTgK31Q+9XcH0=
   dependencies:
     eslint-utils "^2.1.0"
     natural-compare "^1.4.0"
