@@ -4,11 +4,23 @@
     class="canvas"
     :width="width"
     :height="height"
+    @mousedown="handleMouseDown"
+    @mouseup="handleMouseUp"
+    @mouseout="handleMouseOut"
+    @mousemove="handleMouseMove"
   ></canvas>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, watch } from "vue";
-import { useMouseInElement, useMousePressed } from "@vueuse/core";
+import {
+  defineComponent,
+  inject,
+  onMounted,
+  reactive,
+  toRefs,
+  // watch,
+  Ref
+} from "vue";
+// import { useMouseInElement, useMousePressed } from "@vueuse/core";
 const Paint = defineComponent({
   props: {
     width: {
@@ -19,20 +31,14 @@ const Paint = defineComponent({
       type: Number,
       required: true
     },
-    lineWidth: {
-      type: Number,
-      default: 3
-    },
-    lineColor: {
-      type: String,
-      default: "#000"
-    },
     enabled: {
       type: Boolean,
       required: true
     }
   },
   setup(props) {
+    let pressed = false;
+    const paintState = inject<Ref<PaintState>>("paintState")!;
     const state = reactive({
       ctx: null as CanvasRenderingContext2D | null,
       CanvasRef: {} as HTMLCanvasElement
@@ -40,35 +46,77 @@ const Paint = defineComponent({
     const save = () => {
       return state.CanvasRef.toDataURL("image/png");
     };
+    const handleMouseDown = (e: MouseEvent) => {
+      pressed = true;
+    };
+    const handleMouseUp = (e: MouseEvent) => {
+      pressed = false;
+    };
+    const handleMouseOut = (e: MouseEvent) => {
+      pressed = false;
+    };
+    const handleMouseMove = (e: MouseEvent) => {
+      if (state.ctx) {
+        if (pressed) {
+          const x = e.offsetX;
+          const y = e.offsetY;
+          state.ctx.lineTo(x, y);
+          state.ctx.lineWidth = paintState.value.size * 2;
+          state.ctx.lineCap = "round";
+          state.ctx.lineJoin = "round";
+          state.ctx.strokeStyle = paintState.value.color;
+          state.ctx.fillStyle = paintState.value.color;
+          state.ctx.stroke();
+          state.ctx.beginPath();
+          state.ctx.arc(x, y, paintState.value.size, 0, 2 * Math.PI, true);
+          state.ctx.fill();
+          state.ctx.beginPath();
+          state.ctx.moveTo(x, y);
+        } else {
+          state.ctx.beginPath();
+        }
+      }
+    };
     onMounted(() => {
       state.ctx = state.CanvasRef.getContext("2d");
-      const { pressed } = useMousePressed();
-      const { elementX, elementY } = useMouseInElement(state.CanvasRef);
-      watch([elementX, elementY], n => {
-        if (state.ctx && props.enabled) {
-          if (pressed.value) {
-            state.ctx.lineTo(n[0], n[1]);
-            state.ctx.lineWidth = props.lineWidth * 2;
-            state.ctx.lineCap = "round";
-            state.ctx.lineJoin = "round";
-            state.ctx.strokeStyle = props.lineColor;
-            state.ctx.fillStyle = props.lineColor;
-            state.ctx.stroke();
-            state.ctx.beginPath();
-            state.ctx.arc(n[0], n[1], props.lineWidth, 0, 2 * Math.PI, true);
-            state.ctx.fill();
-            state.ctx.beginPath();
-            state.ctx.moveTo(n[0], n[1]);
-          } else {
-            state.ctx.beginPath();
-          }
-        }
-      });
+      // const { pressed } = useMousePressed();
+      // const { elementX, elementY } = useMouseInElement(state.CanvasRef);
+      // watch([elementX, elementY], n => {
+      //   if (state.ctx && props.enabled) {
+      //     if (pressed.value) {
+      //       state.ctx.lineTo(n[0], n[1]);
+      //       state.ctx.lineWidth = paintState.value.size * 2;
+      //       state.ctx.lineCap = "round";
+      //       state.ctx.lineJoin = "round";
+      //       state.ctx.strokeStyle = paintState.value.color;
+      //       state.ctx.fillStyle = paintState.value.color;
+      //       state.ctx.stroke();
+      //       state.ctx.beginPath();
+      //       state.ctx.arc(
+      //         n[0],
+      //         n[1],
+      //         paintState.value.size,
+      //         0,
+      //         2 * Math.PI,
+      //         true
+      //       );
+      //       state.ctx.fill();
+      //       state.ctx.beginPath();
+      //       state.ctx.moveTo(n[0], n[1]);
+      //     } else {
+      //       state.ctx.beginPath();
+      //     }
+      //   }
+      // });
     });
     return {
       ...toRefs(state),
       // method
-      save
+      save,
+      handleMouseDown,
+      handleMouseUp,
+      handleMouseOut,
+      handleMouseMove
     };
   }
 });

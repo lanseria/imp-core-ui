@@ -30,10 +30,15 @@ interface PaintState {
   color: string;
 }
 
+interface TextState {
+  size: number;
+  color: string;
+  family: string;
+}
+
 interface TextAreaItemVO {
   id: string;
   x: number;
   y: number;
   text: string;
-  size: number;
 }

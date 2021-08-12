@@ -14,7 +14,7 @@
 import { NCard } from "naive-ui";
 import { computed, defineComponent, onMounted, ref } from "vue";
 import {
-  adminPdfContentByIdReq,
+  // adminPdfContentByIdReq,
   adminPdfDetailByIdReq,
   adminPdfAnnotateByIdReq,
   adminPdfAnnotateCreateReq

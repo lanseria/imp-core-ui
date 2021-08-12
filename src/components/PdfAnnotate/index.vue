@@ -37,17 +37,15 @@
                 ref="PaintRef"
                 :width="CanvasRef.width"
                 :height="CanvasRef.height"
-                :lineWidth="paintState.size"
-                :lineColor="paintState.color"
                 :enabled="editState === 'Paint'"
+                :style="{ zIndex: editState === 'Paint' ? 1 : 0 }"
               ></Paint>
               <Text
                 ref="TextRef"
                 :width="CanvasRef.width"
                 :height="CanvasRef.height"
-                :fontSize="textState.size"
-                :fontColor="textState.color"
                 :enabled="editState === 'Text'"
+                :style="{ zIndex: editState === 'Text' ? 1 : 0 }"
               ></Text>
             </template>
             <img
@@ -73,8 +71,10 @@ import {
   onMounted,
   reactive,
   toRefs,
+  ref,
   PropType,
-  watchEffect
+  watchEffect,
+  provide
 } from "vue";
 import * as pdfjsLib from "pdfjs-dist";
 import {
@@ -131,14 +131,6 @@ export default defineComponent({
       current: 1,
       total: 0,
       editState: "" as EditState,
-      paintState: {
-        size: 3,
-        color: "#000"
-      } as PaintState,
-      textState: {
-        size: 14,
-        color: "#000"
-      } as PaintState,
       pdfDoc: {} as PDFDocumentProxy,
       pdfPage: {} as PDFPageProxy,
       info: {
@@ -148,6 +140,17 @@ export default defineComponent({
         keywords: ""
       }
     });
+    const paintState = ref<PaintState>({
+      size: 3,
+      color: "#000"
+    });
+    const textState = ref<TextState>({
+      size: 14,
+      color: "#000",
+      family: "微软雅黑"
+    });
+    provide("paintState", paintState);
+    provide("textState", textState);
     // method
     /**
      * @description: 检测有没有元素处于全屏状态
@@ -273,6 +276,8 @@ export default defineComponent({
       });
     });
     return {
+      paintState,
+      textState,
       fullscreen,
       handleSave,
       handlePage,
