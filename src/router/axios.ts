@@ -94,6 +94,8 @@ const responseInterceptors = (res: AxiosResponse<any>) => {
       throw Error(msg);
     } else {
       if (status == "404") {
+        // TODO: 暂时处理
+        clearInfoToLogin();
         showNotification("找不到资源");
       } else {
         // 显示验证错误信息
